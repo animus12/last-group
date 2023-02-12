@@ -46,7 +46,7 @@ header("location:index.php?page=home");
 
 <body class="bg-dark">
 
-
+<h1>from master</h1>
   <main id="main" >
   	
   		<div class="align-self-center w-100">
