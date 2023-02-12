@@ -45,10 +45,7 @@ header("location:index.php?page=home");
 </style>
 
 <body class="bg-dark">
-
-<h1>from master</h1>
-  <main id="main" >
-  	
+  <main id="main">
   		<div class="align-self-center w-100">
 		<h4 class="text-white text-center"><b><?php echo $_SESSION['system']['name'] ?></b></h4>
   		<div id="login-center" class="bg-dark row justify-content-center">
