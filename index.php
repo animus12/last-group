@@ -73,20 +73,11 @@ span.select2-selection.select2-selection--single {
   </div>
 
   <main id="view-panel">
-<?php
-  if(isset($_GET['PAGE'])) {
-	  if(  $_GET['page'] == 'home' || $_GET['page'] == 'sales' || $_GET['page'] == 'receiving' || $_GET['page'] == 'inventory' || $_GET['page'] == 'suppliers' || $_GET['page'] == 'products' || $_GET['page'] == 'sales_report' || $_GET['page'] == 'users' || $_GET['page'] == '') {
-		  $page = isset($_GET['page']) ? $_GET['page'] :'home';
-		  include $page.'.php';
-		} else {
-			$page = 'home';
-			include $page.'.php';
-		}
-	} else {
+	<?php
 		$page = isset($_GET['page']) ? $_GET['page'] :'home';
-		include $page.'.php';
-	}
-?>
+		$page2 = $page ? $page : 'home';
+		include $page2.'.php';
+	?>
   </main>
 
   <div id="preloader"></div>
