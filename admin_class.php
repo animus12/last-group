@@ -21,8 +21,6 @@ private $db;
 		if($qry->num_rows > 0){
 			foreach ($qry->fetch_array() as $key => $value) {
 				if($key != 'password' && !is_numeric($key))
-
-
 					$_SESSION['login_'.$key] = $value;
 			}
 				return 1;

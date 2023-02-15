@@ -12,7 +12,6 @@ ob_start();
 // }
 ob_end_flush();
 
-print_r($_SESSION);
 ?>
 <head>
   <meta charset="utf-8">
@@ -77,7 +76,7 @@ header("location:index.php?page=home");
 <script>
 	$('#login-form').submit(function(e){
 		e.preventDefault()
-		$('#login-form button[type="button"]').attr('disabled',true).html('Logging in...');
+		$('.btn-block').attr('disabled',true).html('Logging in...');
 		if($(this).find('.alert-danger').length > 0 )
 			$(this).find('.alert-danger').remove();
 		$.ajax({
@@ -86,8 +85,7 @@ header("location:index.php?page=home");
 			data:$(this).serialize(),
 			error:err=>{
 				console.log(err)
-		$('#login-form button[type="button"]').removeAttr('disabled').html('Login');
-
+				$('.btn-block').removeAttr('disabled').html('Login');
 			},
 			success:function(resp){
 				console.log(resp)
@@ -95,7 +93,7 @@ header("location:index.php?page=home");
 					location.href ='index.php?page=home';
 				}else{
 					$('#login-form').prepend('<div class="alert alert-danger">Username or password is incorrect.</div>')
-					$('#login-form button[type="button"]').removeAttr('disabled').html('Login');
+					$('.btn-block').removeAttr('disabled').html('Login');
 				}
 			}
 		})

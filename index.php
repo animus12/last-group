@@ -74,14 +74,23 @@ span.select2-selection.select2-selection--single {
 
   <main id="view-panel">
 
+
+
   	<?php
-		if(  $_GET['page'] == 'home' || $_GET['page'] == 'sales' || $_GET['page'] == 'receiving' || $_GET['page'] == 'inventory' || $_GET['page'] == 'suppliers' || $_GET['page'] == 'products' || $_GET['page'] == 'sales_report' || $_GET['page'] == 'users') {
-			$page = isset($_GET['page']) ? $_GET['page'] :'home';
-			include $page.'.php';
+
+  if(isset($_GET['PAGE'])) {
+
+	  if(  $_GET['page'] == 'home' || $_GET['page'] == 'sales' || $_GET['page'] == 'receiving' || $_GET['page'] == 'inventory' || $_GET['page'] == 'suppliers' || $_GET['page'] == 'products' || $_GET['page'] == 'sales_report' || $_GET['page'] == 'users' || $_GET['page'] == '') {
+		  $page = isset($_GET['page']) ? $_GET['page'] :'home';
+		  include $page.'.php';
 		} else {
 			$page = 'home';
 			include $page.'.php';
 		}
+	} else {
+		$page = isset($_GET['page']) ? $_GET['page'] :'home';
+		include $page.'.php';
+	}
 	?>
   </main>
 
@@ -196,16 +205,16 @@ span.select2-selection.select2-selection--single {
       $('#alert_toast').removeClass('bg-info')
       $('#alert_toast').removeClass('bg-warning')
 
-    if($bg == 'success')
-      $('#alert_toast').addClass('bg-success')
-    if($bg == 'danger')
-      $('#alert_toast').addClass('bg-danger')
-    if($bg == 'info')
-      $('#alert_toast').addClass('bg-info')
-    if($bg == 'warning')
-      $('#alert_toast').addClass('bg-warning')
-    $('#alert_toast .toast-body').html($msg)
-    $('#alert_toast').toast({delay:3000}).toast('show');
+		if($bg == 'success')
+			$('#alert_toast').addClass('bg-success')
+		if($bg == 'danger')
+			$('#alert_toast').addClass('bg-danger')
+		if($bg == 'info')
+			$('#alert_toast').addClass('bg-info')
+		if($bg == 'warning')
+			$('#alert_toast').addClass('bg-warning')
+		$('#alert_toast .toast-body').html($msg)
+		$('#alert_toast').toast({delay:3000}).toast('show');
   }
   $(document).ready(function(){
     $('#preloader').fadeOut('fast', function() {
