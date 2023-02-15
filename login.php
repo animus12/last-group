@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php 
+<?php
 session_start();
 include('./db_connect.php');
 ob_start();
@@ -11,16 +11,18 @@ ob_start();
 	}
 // }
 ob_end_flush();
+
+print_r($_SESSION);
 ?>
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title><?php echo $_SESSION['system']['name'] ?></title>
- 	
+
 
 <?php include('./header.php'); ?>
-<?php 
+<?php
 if(isset($_SESSION['login_id']))
 header("location:index.php?page=home");
 
@@ -88,6 +90,7 @@ header("location:index.php?page=home");
 
 			},
 			success:function(resp){
+				console.log(resp)
 				if(resp == 1){
 					location.href ='index.php?page=home';
 				}else{
@@ -102,5 +105,5 @@ header("location:index.php?page=home");
         val = val.replace(/[^0-9 \,]/, '');
         $(this).val(val)
     })
-</script>	
+</script>
 </html>

@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-	
+
 <?php session_start(); ?>
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title><?php echo isset($_SESSION['system']['name']) ? $_SESSION['system']['name'] : '' ?></title>
- 	
+
 
 <?php
   if(!isset($_SESSION['login_id']))
     header('location:login.php');
- include('./header.php'); 
- // include('./auth.php'); 
+ include('./header.php');
+ // include('./auth.php');
  ?>
 
 </head>
@@ -71,10 +71,18 @@ span.select2-selection.select2-selection--single {
     <div class="toast-body text-white">
     </div>
   </div>
-  
-  <main id="view-panel" >
-   <?php $page = isset($_GET['page']) ? $_GET['page'] :'home'; ?>
-  	<?php include $page.'.php' ?>
+
+  <main id="view-panel">
+
+  	<?php
+		if(  $_GET['page'] == 'home' || $_GET['page'] == 'sales' || $_GET['page'] == 'receiving' || $_GET['page'] == 'inventory' || $_GET['page'] == 'suppliers' || $_GET['page'] == 'products' || $_GET['page'] == 'sales_report' || $_GET['page'] == 'users') {
+			$page = isset($_GET['page']) ? $_GET['page'] :'home';
+			include $page.'.php';
+		} else {
+			$page = 'home';
+			include $page.'.php';
+		}
+	?>
   </main>
 
   <div id="preloader"></div>
@@ -121,9 +129,9 @@ span.select2-selection.select2-selection--single {
   </div>
 </body>
 <script>
-	 window.start_load = function(){
-    $('body').prepend('<di id="preloader2"></di>')
-  }
+	window.start_load = function(){
+		$('body').prepend('<di id="preloader2"></di>')
+   }
   window.end_load = function(){
     $('#preloader2').fadeOut('fast', function() {
         $(this).remove();
@@ -146,7 +154,7 @@ span.select2-selection.select2-selection--single {
             keyboard:false,
             focus:true
           })
-          end_load()  
+          end_load()
 
 }
   window.uni_modal = function($title = '' , $url='',$size=""){
@@ -219,5 +227,5 @@ span.select2-selection.select2-selection--single {
         val = val.replace(/[^0-9 \,]/, '');
         $(this).val(val)
     })
-</script>	
+</script>
 </html>

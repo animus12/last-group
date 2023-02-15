@@ -2,25 +2,27 @@
 session_start();
 ini_set('display_errors', 1);
 Class Action {
-	private $db;
+private $db;
 
 	public function __construct() {
 		ob_start();
    	include 'db_connect.php';
-    
+
     $this->db = $conn;
 	}
 	function __destruct() {
-	    $this->db->close();
-	    ob_end_flush();
+		$this->db->close();
+		ob_end_flush();
 	}
 
 	function login(){
-		extract($_POST);		
+		extract($_POST);
 		$qry = $this->db->query("SELECT * FROM users where username = '".$username."' and password = '".md5($password)."' ");
 		if($qry->num_rows > 0){
 			foreach ($qry->fetch_array() as $key => $value) {
-				if($key != 'passwors' && !is_numeric($key))
+				if($key != 'password' && !is_numeric($key))
+
+
 					$_SESSION['login_'.$key] = $value;
 			}
 				return 1;
@@ -29,8 +31,8 @@ Class Action {
 		}
 	}
 	function login2(){
-		
-		extract($_POST);		
+
+		extract($_POST);
 		$qry = $this->db->query("SELECT * FROM complainants where email = '".$email."' and password = '".md5($password)."' ");
 		if($qry->num_rows > 0){
 			foreach ($qry->fetch_array() as $key => $value) {
@@ -167,7 +169,7 @@ Class Action {
 					$data .= ", cover_img = '$fname' ";
 
 		}
-		
+
 		// echo "INSERT INTO system_settings set ".$data;
 		$chk = $this->db->query("SELECT * FROM system_settings");
 		if($chk->num_rows > 0){

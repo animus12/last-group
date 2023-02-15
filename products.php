@@ -1,7 +1,15 @@
 <?php include('db_connect.php');?>
-
+<?php
+	if($_SESSION['login_type'] != 1) {
+	?>
+		<script>
+			window.location.href = "index.php?page=home"
+		</script>
+	<?php
+	}
+?>
 <div class="container-fluid">
-	
+
 	<div class="col-lg-12">
 		<div class="row">
 			<!-- FORM Panel -->
@@ -43,7 +51,7 @@
 								<input type="number" class="form-control form-control-sm text-right" name="price">
 							</div>
 					</div>
-							
+
 					<div class="card-footer">
 						<div class="row">
 							<div class="col-md-12">
@@ -74,7 +82,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<?php 
+								<?php
 								$i = 1;
 								$product = $conn->query("SELECT * FROM items order by id asc");
 								while($row=$product->fetch_assoc()):
@@ -103,11 +111,11 @@
 			</div>
 			<!-- Table Panel -->
 		</div>
-	</div>	
+	</div>
 
 </div>
 <style>
-	
+
 	td{
 		vertical-align: middle !important;
 	}
@@ -126,7 +134,7 @@
 		$('input:hidden').val('')
 		$('.select2').val('').trigger('change')
 	})
-	
+
 	$('#manage-product').submit(function(e){
 		e.preventDefault()
 		start_load()

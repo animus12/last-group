@@ -1,7 +1,16 @@
 <?php include('db_connect.php');?>
+<?php
+	if($_SESSION['login_type'] != 1) {
+	?>
+		<script>
+			window.location.href = "index.php?page=home"
+		</script>
+	<?php
+	}
+?>
 
 <div class="container-fluid">
-	
+
 	<div class="col-lg-12">
 		<div class="row">
 			<!-- FORM Panel -->
@@ -26,7 +35,7 @@
 								<textarea name="address" id="address" cols="30" rows="4" class="form-control"></textarea>
 							</div>
 					</div>
-							
+
 					<div class="card-footer">
 						<div class="row">
 							<div class="col-md-12">
@@ -56,7 +65,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<?php 
+								<?php
 								$i = 1;
 								$supplier = $conn->query("SELECT * FROM suppliers order by id asc");
 								while($row=$supplier->fetch_assoc()):
@@ -81,11 +90,11 @@
 			</div>
 			<!-- Table Panel -->
 		</div>
-	</div>	
+	</div>
 
 </div>
 <style>
-	
+
 	td{
 		vertical-align: middle !important;
 	}
@@ -97,7 +106,7 @@
 	$('#manage-supplier').on('reset',function(){
 		$('input:hidden').val('')
 	})
-	
+
 	$('#manage-supplier').submit(function(e){
 		e.preventDefault()
 		start_load()

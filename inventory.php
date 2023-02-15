@@ -1,4 +1,15 @@
 <?php include "db_connect.php" ?>
+
+<?php
+	if($_SESSION['login_type'] != 1) {
+		?>
+			<script>
+				window.location.href = "index.php?page=home"
+			</script>
+		<?php
+	}
+ ?>
+
 <div class="col-lg-12">
 	<div class="card">
 		<div class="card-header"><b>Inventory</b></div>

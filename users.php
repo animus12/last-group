@@ -1,9 +1,18 @@
-<?php 
 
+<?php
+
+if($_SESSION['login_type'] != 1) {
 ?>
+	<script>
+		window.location.href = "index.php?page=home"
+	</script>
+<?php
+}
+
+ ?>
 
 <div class="container-fluid">
-	
+
 	<div class="row">
 	<div class="col-lg-12">
 			<button class="btn btn-primary float-right btn-sm" id="new_user"><i class="fa fa-plus"></i> New user</button>
@@ -39,7 +48,7 @@
 				 	<td>
 				 		<?php echo ucwords($row['name']) ?>
 				 	</td>
-				 	
+
 				 	<td>
 				 		<?php echo $row['username'] ?>
 				 	</td>

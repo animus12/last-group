@@ -1,7 +1,15 @@
 <?php include('db_connect.php');?>
-
+<?php
+	if($_SESSION['login_type'] != 1) {
+		?>
+			<script>
+				window.location.href = "index.php?page=home"
+			</script>
+		<?php
+	}
+ ?>
 <div class="container-fluid">
-	
+
 	<div class="col-lg-12">
 		<div class="row">
 			<!-- Table Panel -->
@@ -10,7 +18,7 @@
 					<div class="card-header">
 						<b>Receiving List</b>
 						 <span class="float:right"><a class="btn btn-primary btn-sm col-sm-3 float-right" href="index.php?page=manage_receiving" id="">
-		                    <i class="fa fa-plus"></i> New Entry 
+		                    <i class="fa fa-plus"></i> New Entry
 		                </a></span>
 					</div>
 					<div class="card-body">
@@ -25,7 +33,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<?php 
+								<?php
 								$i = 1;
 								$receiving = $conn->query("SELECT r.*,s.name as sname FROM receiving r inner join suppliers s on s.id = r.supplier_id order by r.id asc");
 								while($row=$receiving->fetch_assoc()):
@@ -54,11 +62,11 @@
 			</div>
 			<!-- Table Panel -->
 		</div>
-	</div>	
+	</div>
 
 </div>
 <style>
-	
+
 	td{
 		vertical-align: middle !important;
 	}
@@ -77,7 +85,7 @@
 		$('input:hidden').val('')
 		$('.select2').val('').trigger('change')
 	})
-	
+
 	$('#manage-receiving').submit(function(e){
 		e.preventDefault()
 		start_load()
