@@ -73,7 +73,7 @@
       cursor: pointer
     }
 </style>
-<?php 
+<?php
 if(isset($_GET['id'])):
 $sale = $conn->query("SELECT * FROM sales where id = {$_GET['id']}");
 foreach($sale->fetch_array() as $k => $v){
@@ -89,14 +89,14 @@ endif;
                 <div class="card-header text-white  border-primary">
                     <b>List</b>
                 <span class="float:right"><a class="btn btn-primary btn-sm col-sm-3 float-right" href="../index.php" id="">
-                    <i class="fa fa-home"></i> Home 
+                    <i class="fa fa-home"></i> Home
                 </a></span>
                 </div>
                <div class="card-body">
             <form action="" id="manage-order">
                 <input type="hidden" name="id" value="<?php echo isset($_GET['id']) ? $_GET['id'] : '' ?>">
                 <div class="bg-white" id='o-list'>
-                            
+
                    <table class="table table-bordered bg-light" >
                         <colgroup>
                             <col width="20%">
@@ -113,13 +113,13 @@ endif;
                            </tr>
                        </thead>
                        <tbody>
-                           <?php 
-                                if(isset($items)):
+                           <?php
+                           if(isset($items)):
                            while($row=$items->fetch_assoc()):
                            ?>
                            <tr>
                                <td>
-                                    <div class="d-flex">
+											 <div class="d-flex">
                                         <span class="btn btn-sm btn-secondary btn-minus"><b><i class="fa fa-minus"></i></b></span>
                                         <input type="number" name="qty[]" id="" value="<?php echo $row['qty'] ?>">
                                         <span class="btn btn-sm btn-secondary btn-plus"><b><i class="fa fa-plus"></i></b></span>
@@ -139,7 +139,7 @@ endif;
                                     <span class="btn btn-sm btn-danger btn-rem"><b><i class="fa fa-times text-white"></i></b></span>
                                 </td>
                            </tr>
-                           
+
                        <?php endwhile; ?>
                        <?php endif; ?>
                        <script>
@@ -198,24 +198,40 @@ endif;
                               $items = $conn->query("SELECT * FROM items order by name asc");
                               while($row=$items->fetch_assoc()):
                             ?>
-                            <tr data-id="<?php echo $row['id'] ?>" class="p-item" data-json='<?php echo json_encode($row) ?>'>
-                              <td class="text-center"><?php echo $i++; ?></td>
-                              <td><b><?php echo $row['item_code'] ?></b></td>
-                              <td><b><?php echo ucwords($row['name']) ?></b></td>
-                              <td><b><?php echo $row['size'] ?></b></td>
-                              <td class="text-right"><b><?php echo number_format($row['price'],2) ?></b></td>
-                            </tr>
+
+									 <?php
+											$inn = $conn->query("SELECT sum(qty) as stock FROM stocks where type = 1 and item_id =".$row['id']);
+											$inn = $inn->num_rows > 0 ? $inn->fetch_array()['stock'] :0 ;
+											$out = $conn->query("SELECT sum(qty) as stock FROM stocks where type = 2 and item_id =".$row['id']);
+											$out = $out->num_rows > 0 ? $out->fetch_array()['stock'] :0 ;
+											$available = $inn - $out;
+										if($available <= 0) {
+											echo '';
+										} else { ?>
+
+											<tr data-id="<?php echo $row['id'] ?>" class="p-item" data-json='<?php echo json_encode($row) ?>'>
+												<td class="text-center"><?php echo $i++; ?></td>
+												<td><b><?php echo $row['item_code'] ?></b></td>
+												<td><b><?php echo ucwords($row['name']) ?></b></td>
+												<td><b><?php echo $row['size'] ?></b></td>
+												<td class="text-right"><b><?php echo number_format($row['price'],2) ?></b></td>
+											</tr>
+
+									<?php	}
+									 ?>
+
+
                             <?php endwhile; ?>
                           </tbody>
                         </table>
-                    </div>   
+                    </div>
                 </div>
             <div class="card-footer bg-dark  border-primary">
                 <div class="row justify-content-center">
                     <div class="btn btn btn-sm col-sm-3 btn-primary mr-2" type="button" id="pay">Pay</div>
                 </div>
             </div>
-            </div>      			
+            </div>
         </div>
     </div>
 </div>
@@ -267,9 +283,9 @@ endif;
         }
         var tr = $('<tr class="o-item"></tr>')
         tr.attr('data-id',data.id)
-        tr.append('<td><div class="d-flex"><span class="btn btn-sm btn-secondary btn-minus"><b><i class="fa fa-minus"></i></b></span><input type="number" name="qty[]" id="" value="1"><span class="btn btn-sm btn-secondary btn-plus"><b><i class="fa fa-plus"></i></b></span></div></td>') 
-        tr.append('<td><input type="hidden" name="inv_id[]" id="" value=""><input type="hidden" name="item_id[]" id="" value="'+data.id+'">'+data.name+' <small class="psmall">('+(parseFloat(data.price).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:2,maximumFractionDigits:2}))+')</small></td>') 
-        tr.append('<td class="text-right"><input type="hidden" name="price[]" id="" value="'+data.price+'"><input type="hidden" name="amount[]" id="" value="'+data.price+'"><span class="amount">'+(parseFloat(data.price).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:2,maximumFractionDigits:2}))+'</span></td>') 
+        tr.append('<td><div class="d-flex"><span class="btn btn-sm btn-secondary btn-minus"><b><i class="fa fa-minus"></i></b></span><input type="number" name="qty[]" id="" value="1"><span class="btn btn-sm btn-secondary btn-plus"><b><i class="fa fa-plus"></i></b></span></div></td>')
+        tr.append('<td><input type="hidden" name="inv_id[]" id="" value=""><input type="hidden" name="item_id[]" id="" value="'+data.id+'">'+data.name+' <small class="psmall">('+(parseFloat(data.price).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:2,maximumFractionDigits:2}))+')</small></td>')
+        tr.append('<td class="text-right"><input type="hidden" name="price[]" id="" value="'+data.price+'"><input type="hidden" name="amount[]" id="" value="'+data.price+'"><span class="amount">'+(parseFloat(data.price).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:2,maximumFractionDigits:2}))+'</span></td>')
         tr.append('<td><span class="btn btn-sm btn-danger btn-rem"><b><i class="fa fa-times text-white"></i></b></span></td>')
         $('#o-list tbody').append(tr)
         qty_func()
@@ -302,7 +318,7 @@ endif;
                 calc()
             })
          })
-         
+
     }
     function calc(){
          $('[name="qty[]"]').each(function(){
@@ -313,12 +329,12 @@ endif;
                 var amount = parseFloat(qty) * parseFloat(price);
                     tr.find('[name="amount[]"]').val(amount)
                     tr.find('.amount').text(parseFloat(amount).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:2,maximumFractionDigits:2}))
-                
+
             })
          })
          var total = 0;
          $('[name="amount[]"]').each(function(){
-            total = parseFloat(total) + parseFloat($(this).val()) 
+            total = parseFloat(total) + parseFloat($(this).val())
          })
         $('[name="total_amount"]').val(total)
         $('#total_amount').text(parseFloat(total).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:2,maximumFractionDigits:2}))
@@ -361,7 +377,7 @@ endif;
         $('#tendered').focus()
         end_load()
     },500)
-    
+
    })
    $('#tendered').keyup('input',function(e){
         if(e.which == 13){
@@ -369,7 +385,7 @@ endif;
             return false;
         }
         var tend = $(this).val()
-            tend =tend.replace(/,/g,'') 
+            tend =tend.replace(/,/g,'')
         $('[name="total_tendered"]').val(tend)
         if(tend == '')
             $(this).val('')
@@ -380,7 +396,7 @@ endif;
         var change = parseFloat(tend) - parseFloat(amount)
         $('#change').val(parseFloat(change).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:2,maximumFractionDigits:2}))
    })
-   
+
     $('#tendered').on('input',function(){
         var val = $(this).val()
         val = val.replace(/[^0-9 \,]/, '');

@@ -20,6 +20,7 @@
   <link href="assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
   <link href="assets/DataTables/datatables.min.css" rel="stylesheet">
   <link href="assets/css/jquery.datetimepicker.min.css" rel="stylesheet">
+  <!-- <link href="https://canvasjs.com/assets/css/jquery-ui.1.11.2.min.css" rel="stylesheet" /> -->
 
 
   <!-- Template Main CSS File -->
@@ -36,7 +37,10 @@
   <script src="assets/vendor/counterup/counterup.min.js"></script>
   <script src="assets/vendor/owl.carousel/owl.carousel.min.js"></script>
   <script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-    <script type="text/javascript" src="assets/js/select2.min.js"></script>
-    <script type="text/javascript" src="assets/js/jquery.datetimepicker.full.min.js"></script>
-    <script type="text/javascript" src="assets/font-awesome/js/all.min.js"></script>
+	<script type="text/javascript" src="assets/js/select2.min.js"></script>
+	<script type="text/javascript" src="assets/js/jquery.datetimepicker.full.min.js"></script>
+	<script type="text/javascript" src="assets/font-awesome/js/all.min.js"></script>
   <script type="text/javascript" src="assets/js/jquery-te-1.4.0.min.js" charset="utf-8"></script>
+  <!-- <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script> -->
+	<script src="https://canvasjs.com/assets/script/jquery-ui.1.11.2.min.js"></script>
+	<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>

@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-	
+
 <?php session_start(); ?>
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title><?php echo isset($_SESSION['system']['name']) ? $_SESSION['system']['name'] : '' ?></title>
- 	
+
 
 <?php
- include('./header.php'); 
- // include('./auth.php'); 
+ include('./header.php');
+ // include('./auth.php');
  ?>
 
 </head>
@@ -63,7 +63,7 @@
     max-width: calc(100%);
   }
   main#view-panel {
-     margin-left: inherit; 
+     margin-left: inherit;
     width: calc(100%);
   }
 </style>
@@ -74,7 +74,7 @@
     <div class="toast-body text-white">
     </div>
   </div>
-  
+
   <main id="view-panel" >
       <?php $page = isset($_GET['page']) ? $_GET['page'] :'home'; ?>
       <?php include $page.'.php' ?>
@@ -83,7 +83,7 @@
   <div id="preloader"></div>
   <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
 
-<div class="modal fade" id="confirm_modal" role='dialog'>
+  <div class="modal fade" id="confirm_modal" role='dialog'>
     <div class="modal-dialog modal-md" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -152,7 +152,7 @@
             keyboard:false,
             focus:true
           })
-          end_load()  
+          end_load()
 
 }
   window.uni_modal = function($title = '' , $url='',$size="",$params = {}){
@@ -220,5 +220,5 @@ window._conf = function($msg='',$func='',$params = []){
     placeholder:"Please select here",
     width: "100%"
   })
-</script>	
+</script>
 </html>

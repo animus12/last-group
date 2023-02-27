@@ -37,18 +37,102 @@
 </style>
 
 <div class="container-fluid">
-	<div class="row mt-3 ml-3 mr-3">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-body">
-                    <?php echo "Welcome back ". $_SESSION['login_name']."!"  ?>
-                    <hr>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class=" p-5 align-center m-3 rounded bg-info" style="height: calc(100vh - 100px)">
+		<div class="row justify-content-center h-100" >
+			<div class="row p-0 col-12">
+				<div class="col-lg-4 p-2">
+					<div class=" d-flex flex-column align-items-center justify-content-center h-100 p-3 bg-light" style="border-radius: 20px;">
+						<h2>Monthly income</h2>
+						<?php
+                      $total = 0;
+                      $sales = $conn->query("SELECT * FROM sales s where s.amount_tendered > 0 and date_format(s.date_created,'%Y-%m') = '2023-02' order by unix_timestamp(s.date_created) asc ");
+                      if($sales->num_rows > 0) {
+								while($row = $sales->fetch_array()) {
+									$items = $conn->query("SELECT s.*,i.name,i.item_code as code,i.size  FROM stocks s inner join items i on i.id=s.item_id where s.id in ({$row['inventory_ids']})");
+								 while($roww = $items->fetch_array()) {
+									 $total += $roww['price']*$roww['qty'];
+								 }
+								}
+
+							 }
+
+                    ?>
+
+						  <h4 class="text-success"><strong><?php echo number_format($total,2)?></strong></h4>
+					</div>
+				</div>
+				<div class="col-lg-4 p-2">
+					<div class="d-flex flex-column align-items-center justify-content-center h-100 p-3 bg-light" style="border-radius: 20px;">
+					<h2>Order Per Month</h2>
+						<?php
+							$totals = 0;
+							$sales = $conn->query("SELECT * FROM sales s where s.amount_tendered > 0 and date_format(s.date_created,'%Y-%m') = '2023-02' order by unix_timestamp(s.date_created) asc ");
+							if($sales->num_rows > 0) {
+							while($row = $sales->fetch_array()) {
+								$totals++;
+							}
+							}
+						?>
+						<div class=" w-100 justify-content-around d-flex flex-row">
+							<h4>Total of:</h4>
+							<h4 class=""><strong class="text-success"><?php echo $totals; ?></strong></h4>
+						</div>
+
+
+					</div>
+				</div>
+				<div class="col-lg-4 p-2">
+					<div class="h-100 p-3 bg-light" style="border-radius: 20px;">
+						dfdff
+					</div>
+				</div>
+			</div>
+			<div class="row p-2 col-12">
+				<div class="bg-light w-100 p-3" style="border-radius: 20px;">
+					<div id="resizable" style="height: 370px;border:1px solid gray;">
+						<div id="chartContainer1" style="height: 100%; width: 100%;"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <script>
+	window.onload = function () {
+
+// Construct options first and then pass it as a parameter
+var options1 = {
+	animationEnabled: true,
+	title: {
+		text: ""
+	},
+	data: [{
+		type: "column", //change it to line, area, bar, pie, etc
+		legendText: "Try Resizing with the handle to the bottom right",
+		showInLegend: true,
+		dataPoints: [
+			{ y: 6 },
+			{ y: 6 },
+			{ y: 14 },
+			{ y: 12 },
+			{ y: 10 },
+			{ y: 15 }
+			]
+		}]
+};
+
+$("#resizable").resizable({
+	create: function (event, ui) {
+		//Create chart.
+		$("#chartContainer1").CanvasJSChart(options1);
+	},
+	resize: function (event, ui) {
+		//Update chart size according to its container size.
+		$("#chartContainer1").CanvasJSChart().render();
+	}
+});
+
+}
 	$('#manage-records').submit(function(e){
         e.preventDefault()
         start_load()

@@ -168,6 +168,7 @@
 		start_load()
 		var data = $(this).attr('data-json');
 			data = JSON.parse(data)
+			console.log(data)
 		var cat = $('#manage-product')
 		cat.get(0).reset()
 		cat.find("[name='id']").val(data.id)

@@ -20,12 +20,11 @@ if(isset($_GET['id'])){
 							<label class="control-label">Supplier</label>
 							<select name="supplier_id" id="" class="custom-select custom-select-sm select2">
 								<option></option>
-								<?php 
-								$supplier = $conn->query("SELECT * FROM suppliers order by name asc");
-								while($row = $supplier->fetch_assoc()):
-								?>
-								<option value="<?php echo $row['id'] ?>" <?php echo isset($supplier_id) && $supplier_id == $row['id'] ? 'selected' : '' ?>><?php echo ucwords($row['name']) ?></option>
-							<?php endwhile; ?>
+								<?php
+									$supplier = $conn->query("SELECT * FROM suppliers order by name asc");
+									while($row = $supplier->fetch_assoc()): ?>
+									<option value="<?php echo $row['id'] ?>" <?php echo isset($supplier_id) && $supplier_id == $row['id'] ? 'selected' : '' ?>><?php echo ucwords($row['name']) ?></option>
+								<?php endwhile; ?>
 							</select>
 						</div>
 					</div>
@@ -36,7 +35,7 @@ if(isset($_GET['id'])){
 							<label class="control-label">Product</label>
 							<select name="item_id" id="item_id" class="custom-select custom-select-sm select2">
 								<option></option>
-								<?php 
+								<?php
 								$items = $conn->query("SELECT * FROM items order by name asc");
 								while($row = $items->fetch_assoc()):
 								?>
@@ -195,6 +194,7 @@ if(isset($_GET['id'])){
 		      	$(this).val(val)
 	    })
 	})
+
 	function calc(){
 		var total = 0;
 		$('[name="qty[]"]').each(function(){
@@ -214,6 +214,7 @@ if(isset($_GET['id'])){
 		$('[name="total_amount"]').val(total)
 		$('#total_amount').text(parseFloat(total).toLocaleString('en-US',{style:"decimal",minimumFractionDigits:2,maximumFractionDigits:2}))
 	}
+
 	$('.number').on('input',function(){
 	    var val = $(this).val()
 	     	val = val.replace(/,/g, '');

@@ -1,4 +1,4 @@
-<?php
+ <?php
     include 'db_connect.php';
     $month = isset($_GET['month']) ? $_GET['month'] : date('Y-m');
 ?>
@@ -62,7 +62,7 @@
                             <p class="text-right"> <b><?php echo number_format($roww['price']*$roww['qty'],2) ?></b></p>
                         </td>
                     </tr>
-                    <?php 
+                    <?php
                         endwhile;
                     endwhile;
                         else:
@@ -70,7 +70,7 @@
                     <tr>
                             <th class="text-center" colspan="8">No Data.</th>
                     </tr>
-                    <?php 
+                    <?php
                         endif;
                     ?>
 			        </tbody>

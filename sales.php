@@ -13,11 +13,11 @@
 }
 </style>
 <div class="container-fluid">
-	
+
 	<div class="col-lg-12">
 		<div class="row mb-4 mt-4">
 			<div class="col-md-12">
-				
+
 			</div>
 		</div>
 		<div class="row">
@@ -40,7 +40,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<?php 
+								<?php
 								$i = 1;
 								$order = $conn->query("SELECT * FROM sales order by unix_timestamp(date_created) desc ");
 								while($row=$order->fetch_assoc()):
@@ -66,11 +66,11 @@
 			</div>
 			<!-- Table Panel -->
 		</div>
-	</div>	
+	</div>
 
 </div>
 <style>
-	
+
 	td{
 		vertical-align: middle !important;
 	}
@@ -88,11 +88,11 @@
 	})
 	$('#new_order').click(function(){
 		uni_modal("New order ","manage_order.php","mid-large")
-		
+
 	})
 	$('.view_order').click(function(){
 		uni_modal("Order  Details","view_order.php?id="+$(this).attr('data-id'),"mid-large")
-		
+
 	})
 	$('.delete_order').click(function(){
 		_conf("Are you sure to delete this order ?","delete_order",[$(this).attr('data-id')])
