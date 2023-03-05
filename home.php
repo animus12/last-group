@@ -37,26 +37,25 @@
 </style>
 
 <div class="container-fluid">
-	<div class=" p-5 align-center m-3 rounded bg-info" style="height: calc(100vh - 100px)">
+	<div class=" p-5 align-center m-3 rounded bg-info" style="max-height: 100%">
 		<div class="row justify-content-center h-100" >
 			<div class="row p-0 col-12">
 				<div class="col-lg-4 p-2">
 					<div class=" d-flex flex-column align-items-center justify-content-center h-100 p-3 bg-light" style="border-radius: 20px;">
 						<h2>Monthly income</h2>
 						<?php
-                      $total = 0;
-                      $sales = $conn->query("SELECT * FROM sales s where s.amount_tendered > 0 and date_format(s.date_created,'%Y-%m') = '2023-02' order by unix_timestamp(s.date_created) asc ");
-                      if($sales->num_rows > 0) {
+								$date = date("Y-m");
+								$total = 0;
+								$sales = $conn->query("SELECT * FROM sales s where s.amount_tendered > 0 and date_format(s.date_created,'%Y-%m') = '{$date}' order by unix_timestamp(s.date_created) asc ");
+								if($sales->num_rows > 0) {
 								while($row = $sales->fetch_array()) {
 									$items = $conn->query("SELECT s.*,i.name,i.item_code as code,i.size  FROM stocks s inner join items i on i.id=s.item_id where s.id in ({$row['inventory_ids']})");
 								 while($roww = $items->fetch_array()) {
 									 $total += $roww['price']*$roww['qty'];
 								 }
 								}
-
 							 }
-
-                    ?>
+              ?>
 
 						  <h4 class="text-success"><strong><?php echo number_format($total,2)?></strong></h4>
 					</div>
@@ -66,7 +65,7 @@
 					<h2>Order Per Month</h2>
 						<?php
 							$totals = 0;
-							$sales = $conn->query("SELECT * FROM sales s where s.amount_tendered > 0 and date_format(s.date_created,'%Y-%m') = '2023-02' order by unix_timestamp(s.date_created) asc ");
+							$sales = $conn->query("SELECT * FROM sales s where s.amount_tendered > 0 and date_format(s.date_created,'%Y-%m') = '{$date}' order by unix_timestamp(s.date_created) asc ");
 							if($sales->num_rows > 0) {
 							while($row = $sales->fetch_array()) {
 								$totals++;
@@ -77,20 +76,35 @@
 							<h4>Total of:</h4>
 							<h4 class=""><strong class="text-success"><?php echo $totals; ?></strong></h4>
 						</div>
-
-
 					</div>
 				</div>
 				<div class="col-lg-4 p-2">
-					<div class="h-100 p-3 bg-light" style="border-radius: 20px;">
-						dfdff
-					</div>
+				<div class=" d-flex flex-column align-items-center justify-content-center h-100 p-3 bg-light" style="border-radius: 20px;">
+							<h2>Total of tocks</h2>
+							<?php
+							$haha = 0;
+							$i = 1;
+							$qry = $conn->query("SELECT * FROM items order by name asc");
+							while($row=$qry->fetch_assoc()){
+								$inn = $conn->query("SELECT sum(qty) as stock FROM stocks where type = 1 and item_id =".$row['id']);
+								$inn = $inn->num_rows > 0 ? $inn->fetch_array()['stock'] :0 ;
+								$out = $conn->query("SELECT sum(qty) as stock FROM stocks where type = 2 and item_id =".$row['id']);
+								$out = $out->num_rows > 0 ? $out->fetch_array()['stock'] :0 ;
+								$available = $inn - $out;
+								if($available > 0) {
+									$haha += $available;
+									// continue;
+								}
+							}
+								?>
+								<h4 class="text-success"><strong><?php echo number_format($haha,0)?></strong></h4>
+						</div>
 				</div>
 			</div>
 			<div class="row p-2 col-12">
 				<div class="bg-light w-100 p-3" style="border-radius: 20px;">
 					<div id="resizable" style="height: 370px;border:1px solid gray;">
-						<div id="chartContainer1" style="height: 100%; width: 100%;"></div>
+					<div id="chartContainer" style="height: 370px; width: 100%;"></div>
 					</div>
 				</div>
 			</div>
@@ -98,41 +112,50 @@
 	</div>
 </div>
 <script>
-	window.onload = function () {
 
-// Construct options first and then pass it as a parameter
-var options1 = {
-	animationEnabled: true,
-	title: {
-		text: ""
-	},
-	data: [{
-		type: "column", //change it to line, area, bar, pie, etc
-		legendText: "Try Resizing with the handle to the bottom right",
-		showInLegend: true,
-		dataPoints: [
-			{ y: 6 },
-			{ y: 6 },
-			{ y: 14 },
-			{ y: 12 },
-			{ y: 10 },
-			{ y: 15 }
-			]
-		}]
-};
+		window.onload = function () {
+		var chart = new CanvasJS.Chart("chartContainer", {
+			animationEnabled: true,
+			theme: "light1", // "light1", "light2", "dark1", "dark2"
+			title:{
+				text: "Sales Chart"
+			},
+			axisX: {
+					reversed: true
+				},
+			data: [{
+				type: "column",
+				showInLegend: true,
+				legendMarkerColor: "grey",
+				dataPoints: [
+					<?php
+						$i = 1;
+						$dateTime = new DateTime();
+						for ($i = 1; $i <= 6; $i++) {
+							$total = 0;
 
-$("#resizable").resizable({
-	create: function (event, ui) {
-		//Create chart.
-		$("#chartContainer1").CanvasJSChart(options1);
-	},
-	resize: function (event, ui) {
-		//Update chart size according to its container size.
-		$("#chartContainer1").CanvasJSChart().render();
-	}
-});
+							$sales = $conn->query("SELECT * FROM sales s where s.amount_tendered > 0 and date_format(s.date_created,'%Y-%m') = '{$dateTime->format('Y-m')}' order by unix_timestamp(s.date_created) asc ");
+							if($sales->num_rows > 0){
+								while($row = $sales->fetch_array()){
+									$items = $conn->query("SELECT s.*,i.name,i.item_code as code,i.size  FROM stocks s inner join items i on i.id=s.item_id where s.id in ({$row['inventory_ids']})");
+									while($roww = $items->fetch_array()){
+										$total += $roww['price']*$roww['qty'];
+									}
+								}
 
-}
+							}
+							echo '{ y: '.$total.', label: "'.$dateTime->format('F Y').'" },';
+							$dateTime->modify('-1 month');
+						}
+					?>
+
+
+				]
+			}]
+		});
+		chart.render();
+		}
+
 	$('#manage-records').submit(function(e){
         e.preventDefault()
         start_load()
