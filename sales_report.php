@@ -28,17 +28,17 @@
                         </tr>
                     </thead>
                     <tbody>
-			          <?php
-                      $i = 1;
-                      $total = 0;
-                      $sales = $conn->query("SELECT * FROM sales s where s.amount_tendered > 0 and date_format(s.date_created,'%Y-%m') = '$month' order by unix_timestamp(s.date_created) asc ");
-                      if($sales->num_rows > 0):
-                      while($row = $sales->fetch_array()):
-                        $items = $conn->query("SELECT s.*,i.name,i.item_code as code,i.size  FROM stocks s inner join items i on i.id=s.item_id where s.id in ({$row['inventory_ids']})");
-                      while($roww = $items->fetch_array()):
-                        $total += $roww['price']*$roww['qty'];
-			          ?>
-			          <tr>
+											<?php
+												$i = 1;
+												$total = 0;
+												$sales = $conn->query("SELECT * FROM sales s where s.amount_tendered > 0 and date_format(s.date_created,'%Y-%m') = '$month' order by unix_timestamp(s.date_created) asc ");
+												if($sales->num_rows > 0):
+												while($row = $sales->fetch_array()):
+													$items = $conn->query("SELECT s.*,i.name,i.item_code as code,i.size  FROM stocks s inner join items i on i.id=s.item_id where s.id in ({$row['inventory_ids']})");
+													while($roww = $items->fetch_array()):
+														$total += $roww['price']*$roww['qty'];
+											?>
+			          		<tr>
                         <td class="text-center"><?php echo $i++ ?></td>
                         <td>
                             <p> <b><?php echo date("M d,Y",strtotime($row['date_created'])) ?></b></p>
@@ -62,17 +62,17 @@
                             <p class="text-right"> <b><?php echo number_format($roww['price']*$roww['qty'],2) ?></b></p>
                         </td>
                     </tr>
-                    <?php
-                        endwhile;
-                    endwhile;
-                        else:
-                    ?>
+											<?php
+													endwhile;
+											endwhile;
+													else:
+											?>
                     <tr>
-                            <th class="text-center" colspan="8">No Data.</th>
+												<th class="text-center" colspan="8">No Data.</th>
                     </tr>
-                    <?php
-                        endif;
-                    ?>
+											<?php
+													endif;
+											?>
 			        </tbody>
                     <tfoot>
                         <tr>

@@ -56,7 +56,6 @@
 								}
 							 }
               ?>
-
 						  <h4 class="text-success"><strong><?php echo number_format($total,2)?></strong></h4>
 					</div>
 				</div>
@@ -133,7 +132,6 @@
 						$dateTime = new DateTime();
 						for ($i = 1; $i <= 6; $i++) {
 							$total = 0;
-
 							$sales = $conn->query("SELECT * FROM sales s where s.amount_tendered > 0 and date_format(s.date_created,'%Y-%m') = '{$dateTime->format('Y-m')}' order by unix_timestamp(s.date_created) asc ");
 							if($sales->num_rows > 0){
 								while($row = $sales->fetch_array()){
@@ -142,14 +140,11 @@
 										$total += $roww['price']*$roww['qty'];
 									}
 								}
-
 							}
 							echo '{ y: '.$total.', label: "'.$dateTime->format('F Y').'" },';
 							$dateTime->modify('-1 month');
 						}
 					?>
-
-
 				]
 			}]
 		});
