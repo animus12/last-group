@@ -61,7 +61,7 @@
 				</div>
 				<div class="col-lg-4 p-2">
 					<div class="d-flex flex-column align-items-center justify-content-center h-100 p-3 bg-light" style="border-radius: 20px;">
-					<h2>Order Per Month</h2>
+					<h2>Transactions Per Month</h2>
 						<?php
 							$totals = 0;
 							$sales = $conn->query("SELECT * FROM sales s where s.amount_tendered > 0 and date_format(s.date_created,'%Y-%m') = '{$date}' order by unix_timestamp(s.date_created) asc ");
