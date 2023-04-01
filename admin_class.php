@@ -242,6 +242,7 @@ private $db;
 			$i = 0;
 			while($i == 0){
 				$item_code  = mt_rand(1,999999999999);
+			
 				$item_code = sprintf("%'012d", $item_code);
 				$chk = $this->db->query("SELECT * FROM items where item_code ='$item_code' ");
 				if($chk->num_rows <= 0){

@@ -55,7 +55,7 @@
 					<div class="card-footer">
 						<div class="row">
 							<div class="col-md-12">
-								<button class="btn btn-sm btn-primary col-sm-3 offset-md-3"> Save</button>
+								<button class="btn btn-sm btn-primary col-sm-3 offset-md-3"> Sav</button>
 								<button class="btn btn-sm btn-default col-sm-3" type="button" onclick="$('#manage-product').get(0).reset()"> Cancel</button>
 							</div>
 						</div>
@@ -164,6 +164,7 @@
 			}
 		})
 	})
+	
 	$('.edit_product').click(function(){
 		start_load()
 		var data = $(this).attr('data-json');
