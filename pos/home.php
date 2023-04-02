@@ -215,7 +215,7 @@ endif;
 												<td><b><?php echo $row['item_code'] ?></b></td>
 												<td><b><?php echo ucwords($row['name']) ?></b></td>
 												<td><b><?php echo $row['size'] ?></b></td>
-												<td class="text-center"><b><?php echo number_format($available) ?></b></td>
+												<td class=""><b><?php echo $available; ?></b></td>
 												<td class="text-right"><b><?php echo number_format($row['price'],2) ?></b></td>
 											</tr>
 
