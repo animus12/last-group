@@ -42,5 +42,7 @@
 	<script type="text/javascript" src="assets/font-awesome/js/all.min.js"></script>
   <script type="text/javascript" src="assets/js/jquery-te-1.4.0.min.js" charset="utf-8"></script>
   <!-- <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script> -->
-	<script src="https://canvasjs.com/assets/script/jquery-ui.1.11.2.min.js"></script>
-	<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+	<!-- <script src="https://canvasjs.com/assets/script/jquery-ui.1.11.2.min.js"></script> -->
+	<!-- <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script> -->
+	<script src="assets/vendor/canvas/canvas.min.js"></script>
+	<script src="assets/vendor/canvas/canvasjq.min.js"></script>

@@ -61,7 +61,7 @@
 				</div>
 				<div class="col-lg-4 p-2">
 					<div class="d-flex flex-column align-items-center justify-content-center h-100 p-3 bg-light" style="border-radius: 20px;">
-					<h2>Transactions Per Month</h2>
+					<h2>Transaction Count</h2>
 						<?php
 							$totals = 0;
 							$sales = $conn->query("SELECT * FROM sales s where s.amount_tendered > 0 and date_format(s.date_created,'%Y-%m') = '{$date}' order by unix_timestamp(s.date_created) asc ");
@@ -110,10 +110,13 @@
 		</div>
 	</div>
 </div>
-<script>
 
-		window.onload = function () {
-		var chart = new CanvasJS.Chart("chartContainer", {
+
+<script>
+	
+	$(document).ready(function() {
+		var chart = new CanvasJS.Chart("chartContainer", 
+    {
 			animationEnabled: true,
 			theme: "light1", // "light1", "light2", "dark1", "dark2"
 			title:{
@@ -127,20 +130,26 @@
 				showInLegend: true,
 				legendMarkerColor: "grey",
 				dataPoints: [
+					
 					<?php
-						$i = 1;
+          
 						$dateTime = new DateTime();
-						for ($i = 1; $i <= 6; $i++) {
+						for ( $i = 1; $i <= 6; $i++ )
+            {
+              
 							$total = 0;
 							$sales = $conn->query("SELECT * FROM sales s where s.amount_tendered > 0 and date_format(s.date_created,'%Y-%m') = '{$dateTime->format('Y-m')}' order by unix_timestamp(s.date_created) asc ");
-							if($sales->num_rows > 0){
-								while($row = $sales->fetch_array()){
+							if( $sales->num_rows > 0 ){
+								while( $row = $sales->fetch_array() )
+                {
 									$items = $conn->query("SELECT s.*,i.name,i.item_code as code,i.size  FROM stocks s inner join items i on i.id=s.item_id where s.id in ({$row['inventory_ids']})");
-									while($roww = $items->fetch_array()){
-										$total += $roww['price']*$roww['qty'];
+									while( $roww = $items->fetch_array() )
+                  {
+										$total += $roww['price'] * $roww['qty'];
 									}
 								}
 							}
+						
 							echo '{ y: '.$total.', label: "'.$dateTime->format('F Y').'" },';
 							$dateTime->modify('-1 month');
 						}
@@ -149,62 +158,65 @@
 			}]
 		});
 		chart.render();
-		}
+	})
 
-	$('#manage-records').submit(function(e){
-        e.preventDefault()
-        start_load()
-        $.ajax({
-            url:'ajax.php?action=save_track',
-            data: new FormData($(this)[0]),
-            cache: false,
-            contentType: false,
-            processData: false,
-            method: 'POST',
-            type: 'POST',
-            success:function(resp){
-                resp=JSON.parse(resp)
-                if(resp.status==1){
-                    alert_toast("Data successfully saved",'success')
-                    setTimeout(function(){
-                        location.reload()
-                    },800)
+		// window.onload = function () {
+		
+		// }
+		$('#manage-records').submit(function(e){
+					e.preventDefault()
+					start_load()
+					$.ajax({
+							url:'ajax.php?action=save_track',
+							data: new FormData($(this)[0]),
+							cache: false,
+							contentType: false,
+							processData: false,
+							method: 'POST',
+							type: 'POST',
+							success:function(resp){
+									resp=JSON.parse(resp)
+									if(resp.status==1){
+											alert_toast("Data successfully saved",'success')
+											setTimeout(function(){
+													location.reload()
+											},800)
 
-                }
+									}
 
-            }
-        })
-    })
-    $('#tracking_id').on('keypress',function(e){
-        if(e.which == 13){
-            get_person()
-        }
-    })
-    $('#check').on('click',function(e){
-            get_person()
-    })
-    function get_person(){
-            start_load()
-        $.ajax({
-                url:'ajax.php?action=get_pdetails',
-                method:"POST",
-                data:{tracking_id : $('#tracking_id').val()},
-                success:function(resp){
-                    if(resp){
-                        resp = JSON.parse(resp)
-                        if(resp.status == 1){
-                            $('#name').html(resp.name)
-                            $('#address').html(resp.address)
-                            $('[name="person_id"]').val(resp.id)
-                            $('#details').show()
-                            end_load()
+							}
+					})
+			})
+			$('#tracking_id').on('keypress',function(e){
+					if(e.which == 13){
+							get_person()
+					}
+			})
+			$('#check').on('click',function(e){
+							get_person()
+			})
+			function get_person(){
+							start_load()
+					$.ajax({
+									url:'ajax.php?action=get_pdetails',
+									method:"POST",
+									data:{tracking_id : $('#tracking_id').val()},
+									success:function(resp){
+											if(resp){
+													resp = JSON.parse(resp)
+													if(resp.status == 1){
+															$('#name').html(resp.name)
+															$('#address').html(resp.address)
+															$('[name="person_id"]').val(resp.id)
+															$('#details').show()
+															end_load()
 
-                        }else if(resp.status == 2){
-                            alert_toast("Unknow tracking id.",'danger');
-                            end_load();
-                        }
-                    }
-                }
-            })
-    }
+													}else if(resp.status == 2){
+															alert_toast("Unknow tracking id.",'danger');
+															end_load();
+													}
+											}
+									}
+							})
+ 			 }
 </script>

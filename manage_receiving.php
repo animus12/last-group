@@ -69,7 +69,7 @@ if(isset($_GET['id'])){
 							<tbody>
 								<?php
 									if(isset($stock)):
-									while($row=$stock->fetch_assoc()):
+									while($row = $stock->fetch_assoc()):
 								?>
 								<tr data-id="<?php echo $row['iid'] ?>">
 									<td class="text-center">

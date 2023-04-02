@@ -1,6 +1,7 @@
  <?php
     include 'db_connect.php';
     $month = isset($_GET['month']) ? $_GET['month'] : date('Y-m');
+		echo $month;
 ?>
 <div class="container-fluid">
     <div class="col-lg-12">
@@ -101,15 +102,15 @@
 		table#report-list td,table#report-list th{
 			border:1px solid
 		}
-        p{
-            margin:unset;
-        }
+		p {
+				margin:unset;
+		}
 		.text-center{
 			text-align:center
 		}
-        .text-right{
-            text-align:right
-        }
+		.text-right{
+				text-align:right
+		}
 	</style>
 </noscript>
 <script>
