@@ -28,6 +28,12 @@ if($action == 'save_user'){
 	if($save)
 		echo $save;
 }
+
+if($action == 'timeout'){
+	$time = $crud->time_out($_POST['hehe']);
+	if($time)
+		echo $time;
+}
 if($action == 'delete_user'){
 	$save = $crud->delete_user();
 	if($save)

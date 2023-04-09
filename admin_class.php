@@ -20,6 +20,7 @@ private $db;
 		$qry = $this->db->query("SELECT * FROM users where username = '".$username."' and password = '".md5($password)."' ");
 		if($qry->num_rows > 0){
 			foreach ($qry->fetch_array() as $key => $value) {
+					$_SESSION['last_activity'] = time();
 				if($key != 'password' && !is_numeric($key))
 					$_SESSION['login_'.$key] = $value;
 			}
@@ -49,7 +50,25 @@ private $db;
 		}
 		header("location:login.php");
 	}
-	function logout2(){
+	
+	function time_out($hehe)
+	{
+		// $expire_time = 1*10; 
+		if( time() - $_SESSION['last_activity'] > 20 ) {
+			session_destroy();
+			header("location:login.php");
+			echo '1';
+		}
+		else {
+			echo '2';
+		}
+		if($hehe) {
+			$_SESSION['last_activity'] = time(); // you have to add this line when logged in also;
+		}
+	}
+	
+	function logout2()
+	{
 		session_destroy();
 		foreach ($_SESSION as $key => $value) {
 			unset($_SESSION[$key]);

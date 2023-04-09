@@ -1,36 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<?php session_start(); ?>
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<?php 
+	session_start();
+	
+	?>
+	
+	<head>
+		<meta charset="utf-8">
+		<meta content="width=device-width, initial-scale=1.0" name="viewport">
+		
+		<title><?php echo isset($_SESSION['system']['name']) ? $_SESSION['system']['name'] : '' ?></title>
 
-  <title><?php echo isset($_SESSION['system']['name']) ? $_SESSION['system']['name'] : '' ?></title>
-
-
-<?php
+		
+		<?php
   if(!isset($_SESSION['login_id']))
-    header('location:login.php');
- include('./header.php');
- // include('./auth.php');
- ?>
+	header('location:login.php');
+	include('./header.php');
+	// include('./auth.php');
+	?>
 
 </head>
 <style>
 	body{
-        background: #80808045;
+		background: #80808045;
   }
   .modal-dialog.large {
-    width: 80% !important;
+		width: 80% !important;
     max-width: unset;
   }
   .modal-dialog.mid-large {
-    width: 50% !important;
+		width: 50% !important;
     max-width: unset;
   }
   #viewer_modal .btn-close {
-    position: absolute;
+		position: absolute;
     z-index: 999999;
     /*right: -4.5em;*/
     background: unset;
@@ -41,23 +45,23 @@
 }
 #viewer_modal .modal-dialog {
         width: 80%;
-    max-width: unset;
-    height: calc(90%);
-    max-height: unset;
-}
-  #viewer_modal .modal-content {
-       background: black;
-    border: unset;
-    height: calc(100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  #viewer_modal img,#viewer_modal video{
-    max-height: calc(100%);
-    max-width: calc(100%);
-  }
-
+				max-width: unset;
+				height: calc(90%);
+				max-height: unset;
+			}
+			#viewer_modal .modal-content {
+				background: black;
+				border: unset;
+				height: calc(100%);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			#viewer_modal img,#viewer_modal video{
+				max-height: calc(100%);
+				max-width: calc(100%);
+			}
+			
 
 span.select2-selection.select2-selection--single {
     min-height: 2rem;
@@ -68,12 +72,13 @@ span.select2-selection.select2-selection--single {
 	<?php include 'topbar.php' ?>
 	<?php include 'navbar.php' ?>
   <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="toast-body text-white">
-    </div>
-  </div>
-
-  <main id="view-panel">
-	<?php
+		<div class="toast-body text-white">
+			</div>
+		</div>
+		
+		
+		<main id="view-panel">
+			<?php
 		if(isset($_GET['page'])) {
 			if(  $_GET['page'] == 'home' || $_GET['page'] == 'sales' || $_GET['page'] == 'receiving' || $_GET['page'] == 'inventory' || $_GET['page'] == 'suppliers' || $_GET['page'] == 'products' || $_GET['page'] == 'sales_report' || $_GET['page'] == 'users' || $_GET['page'] == 'manage_receiving') {
 				$page = isset($_GET['page']) ? $_GET['page'] :'home';
@@ -231,5 +236,35 @@ span.select2-selection.select2-selection--single {
         val = val.replace(/[^0-9 \,]/, '');
         $(this).val(val)
     })
+		
+		$(window).mousemove(function() {
+			hehe()
+		});
+
+	function debounce(func, timeout = 60000) {
+		let timer;
+		return (...args) => {
+			if(timer)	clearTimeout(timer);
+			timer = setTimeout(() => {
+				func(...args);
+			}, timeout);
+		}
+	}
+	
+	function mark() {
+		$.ajax({
+			url:'ajax.php?action=timeout',
+			method: 'POST',
+			data: {
+				hehe: true
+			},
+			
+			success:function(resp){
+				console.log(resp)
+			}
+		})
+	}
+	
+	let hehe = debounce(() => mark())
 </script>
 </html>
