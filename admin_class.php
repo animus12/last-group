@@ -78,11 +78,14 @@ private $db;
 
 	function save_user(){
 		extract($_POST);
+		// return json_encode($_POST);
 		$data = " name = '$name' ";
 		$data .= ", username = '$username' ";
 		if(!empty($password))
 		$data .= ", password = '".md5($password)."' ";
-		$data .= ", type = '$type' ";
+		if(isset($type)) {
+			$data .= ", type = '$type' ";
+		}
 		$chk = $this->db->query("Select * from users where username = '$username' and id !='$id' ")->num_rows;
 		if($chk > 0){
 			return 2;
