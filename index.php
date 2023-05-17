@@ -1,10 +1,8 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
-	<?php 
-	session_start();
-	
-	?>
+<?php	session_start(); ?>
 	
 	<head>
 		<meta charset="utf-8">
@@ -15,11 +13,10 @@
 		
 		<?php
   if(!isset($_SESSION['login_id']))
-	header('location:login.php');
-	include('./header.php');
-	// include('./auth.php');
-	?>
-
+    header('location:login.php');
+ include('./header.php');
+ // include('./auth.php');
+ ?>
 </head>
 <style>
 	body{

@@ -1,4 +1,5 @@
 <?php include 'db_connect.php' ?>
+
 <style>
    span.float-right.summary_icon {
     font-size: 3rem;
@@ -36,7 +37,9 @@
 	}
 </style>
 
+
 <div class="container-fluid">
+	
 	<div class=" p-5 align-center m-3 rounded bg-info" style="max-height: 100%">
 		<div class="row justify-content-center h-100" >
 			<div class="row p-0 col-12">

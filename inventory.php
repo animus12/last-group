@@ -14,13 +14,14 @@
 	<div class="card">
 		<div class="card-header"><b>Inventory</b></div>
 		<div class="card-body">
-			<table class="table table-bordered">
+			<table class="table table-bordered" id="myTable">
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
 						<th class="text-center">Item Code</th>
 						<th class="text-center">Item Name</th>
 						<th class="text-center">Item Size</th>
+						<th class="text-center">Item Category</th>
 						<th class="text-center">Stock Available</th>
 					</tr>
 				</thead>
@@ -40,7 +41,15 @@
 						<td><?php echo $row['item_code'] ?></td>
 						<td><?php echo ucwords($row['name']) ?></td>
 						<td><?php echo $row['size'] ?></td>
-						<td class="text-center"><?php echo number_format($available) ?></td>
+						<td><?php echo $row['category'] ?></td>
+						<?php if($available <= 0): ?>
+							<td class="bg-danger text-light text-center">Out of Stock</td>
+						<?php elseif($available <= 20): ?>
+								<td class="bg-warning text-center"><?php echo $available ?></td>
+						<?php else: ?>
+									<td class="text-center"><?php echo $available ?></td>
+						<?php endif; ?>
+						<!-- <td class="text-center <?php echo ($available < 100)? "bg-warning": "" ?> <?php echo ($available <= 0)? "bg-danger text-light": "" ?>"><?php echo (number_format($available) <= 0)? "Out of Stock": number_format($available) ?></td> -->
 					</tr>
 					<?php endwhile; ?>
 				</tbody>
@@ -48,3 +57,12 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function() {
+		var table = $('#myTable').DataTable( {
+        lengthChange: true,
+        buttons: [ 'copy', 'excel', 'pdf', 'colvis' ]
+    } );
+	})
+</script>

@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<?php session_start(); 	
+// ob_start();
+?>
 
-<?php session_start(); ?>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -13,6 +15,14 @@
  include('./header.php');
  // include('./auth.php');
  ?>
+ 
+ <!-- <?php
+  if(!isset($_SESSION['login_id']))
+	header('location:../login.php');
+	// ob_end_flush();
+	// echo "<script>window.location.href='target.php';</script>";
+	// include('./auth.php');
+	?> -->
 
 </head>
 <style>
@@ -69,7 +79,7 @@
 </style>
 
 <body>
-	<?php include 'topbar.php' ?>
+	<!-- <?php include 'topbar.php' ?> -->
   <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="toast-body text-white">
     </div>
@@ -82,7 +92,6 @@
 
   <div id="preloader"></div>
   <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
-
   <div class="modal fade" id="confirm_modal" role='dialog'>
     <div class="modal-dialog modal-md" role="document">
       <div class="modal-content">

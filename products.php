@@ -31,19 +31,26 @@
 								<input type="text" class="form-control form-control-sm" name="name">
 							</div>
 							<div class="form-group">
+								<label class="control-label">Category</label>
+								<select name="category" id="category" class="custom-select custom-select-sm">
+									<option value="" disabled selected>--Select Category--</option>
+									<option value="4065">Male</option>
+									<option value="4067">Female</option>
+								</select>
+							</div>
+							<div class="form-group">
 								<label class="control-label">Description</label>
 								<textarea name="description" id="description" cols="30" rows="4" class="form-control form-control-sm"></textarea>
 							</div>
 							<div class="form-group">
 								<label class="control-label">Size</label>
 								<select name="size" id="size" class="custom-select custom-select-sm">
-									<option>XS</option>
-									<option>S</option>
-									<option>M</option>
-									<option>L</option>
-									<option>XL</option>
-									<option>XXL</option>
-									<option>XXXL</option>
+									<option value="" disabled selected>--Select Size--</option>
+									<option>EXTRA SMALL</option>
+									<option>SMALL</option>
+									<option>MEDIUM</option>
+									<option>LARGE</option>
+									<option>EXTRA LARGE</option>
 								</select>
 							</div>
 							<div class="form-group">
@@ -55,7 +62,7 @@
 					<div class="card-footer">
 						<div class="row">
 							<div class="col-md-12">
-								<button class="btn btn-sm btn-primary col-sm-3 offset-md-3"> Sav</button>
+								<button class="btn btn-sm btn-primary col-sm-3 offset-md-3"> Save </button>
 								<button class="btn btn-sm btn-default col-sm-3" type="button" onclick="$('#manage-product').get(0).reset()"> Cancel</button>
 							</div>
 						</div>
@@ -94,6 +101,7 @@
 									</td>
 									<td class="">
 										<p>Name: <b><?php echo $row['name'] ?></b></p>
+										<p>Category: <b><?php echo $row['category'] != null ? $row['category'] : 'Null' ?></b></p>
 										<p><small>Price: <b><?php echo number_format($row['price'],2) ?></b></small></p>
 										<p><small>Size: <b><?php echo $row['size'] ?></b></small></p>
 										<p><small>Description: <b><?php echo $row['description'] ?></b></small></p>
@@ -147,6 +155,8 @@
 		    method: 'POST',
 		    type: 'POST',
 			success:function(resp){
+				
+				console.log(resp)
 				if(resp==1){
 					alert_toast("Data successfully added",'success')
 					setTimeout(function(){
@@ -175,6 +185,7 @@
 		cat.find("[name='id']").val(data.id)
 		cat.find("[name='item_code']").val(data.item_code)
 		cat.find("[name='name']").val(data.name)
+		cat.find("[name='category']").val(data.category == "Male"? 4065: 4067)
 		cat.find("[name='description']").val(data.description)
 		cat.find("[name='price']").val(data.price)
 		cat.find("[name='size']").val(data.size)

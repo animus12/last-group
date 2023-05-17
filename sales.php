@@ -13,7 +13,6 @@
 }
 </style>
 <div class="container-fluid">
-
 	<div class="col-lg-12">
 		<div class="row mb-4 mt-4">
 			<div class="col-md-12">
@@ -36,7 +35,10 @@
 									<th class="text-center">#</th>
 									<th class="">Date</th>
 									<th class="">Amount</th>
-									<th class="text-center">Action</th>
+									<!-- added by ace -->
+									<?php if($_SESSION['login_type'] != 2): ?>
+										<th class="text-center">Action</th>
+									<?php endif; ?>
 								</tr>
 							</thead>
 							<tbody>
@@ -53,10 +55,13 @@
 									<td>
 										<p class="text-right"> <b><?php echo number_format($row['total_amount'],2) ?></b></p>
 									</td>
-									<td class="text-center">
-										<button class="btn btn-sm btn-outline-primary " type="button" onclick="location.href='pos/index.php?id=<?php echo $row['id'] ?>'" data-id="<?php echo $row['id'] ?>" >Edit</button>
-										<button class="btn btn-sm btn-outline-danger delete_order" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
-									</td>
+										<!-- added by ace -->
+									<?php if($_SESSION['login_type'] != 2): ?>
+										<td class="text-center">
+											<button class="btn btn-sm btn-outline-primary " type="button" onclick="location.href='pos/index.php?id=<?php echo $row['id'] ?>'" data-id="<?php echo $row['id'] ?>" >Edit</button>
+											<button class="btn btn-sm btn-outline-danger delete_order" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
+										</td>
+									<?php endif; ?>
 								</tr>
 								<?php endwhile; ?>
 							</tbody>

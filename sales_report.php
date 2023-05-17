@@ -23,6 +23,7 @@
                             <th class="">Item Code</th>
                             <th class="">Item Name</th>
                             <th class="">Size</th>
+                            <th class="">Category</th>
                             <th class="">Price</th>
                             <th class="">QTY</th>
                             <th class="">Amount</th>
@@ -35,7 +36,7 @@
 												$sales = $conn->query("SELECT * FROM sales s where s.amount_tendered > 0 and date_format(s.date_created,'%Y-%m') = '$month' order by unix_timestamp(s.date_created) asc ");
 												if($sales->num_rows > 0):
 												while($row = $sales->fetch_array()):
-													$items = $conn->query("SELECT s.*,i.name,i.item_code as code,i.size  FROM stocks s inner join items i on i.id=s.item_id where s.id in ({$row['inventory_ids']})");
+													$items = $conn->query("SELECT s.*,i.name,i.item_code as code,i.size, i.category  FROM stocks s inner join items i on i.id=s.item_id where s.id in ({$row['inventory_ids']})");
 													while($roww = $items->fetch_array()):
 														$total += $roww['price']*$roww['qty'];
 											?>
@@ -53,6 +54,10 @@
                         <td>
                             <p class="text-right"> <b><?php echo $roww['size'] ?></b></p>
                         </td>
+												<!-- for development -->
+                        <td>
+                            <p class="text-right"> <b><?php echo $roww['category'] ?></b></p>
+                        </td>
                         <td>
                             <p class="text-right"> <b><?php echo number_format($roww['price'],2) ?></b></p>
                         </td>
@@ -69,7 +74,7 @@
 													else:
 											?>
                     <tr>
-												<th class="text-center" colspan="8">No Data.</th>
+												<th class="text-center" colspan="9">No Data.</th>
                     </tr>
 											<?php
 													endif;
@@ -77,7 +82,7 @@
 			        </tbody>
                     <tfoot>
                         <tr>
-                            <th colspan="7" class="text-right">Total</th>
+                            <th colspan="8" class="text-right">Total</th>
                             <th class="text-right"><?php echo number_format($total,2) ?></th>
                         </tr>
                     </tfoot>

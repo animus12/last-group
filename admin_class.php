@@ -239,11 +239,19 @@ private $db;
 	}
 	function save_product(){
 		extract($_POST);
+		
 		$data = "";
 		foreach($_POST as $k => $v){
 			if(!in_array($k, array('id','item_code')) && !is_numeric($k)){
 				if($k == 'price'){
 					$v= str_replace(',', '', $v);
+				}
+				if($k == 'category') {
+					if($v == '4065') {
+						$v = 'Male';
+					} else {
+						$v = 'Female';
+					}
 				}
 				if(empty($data)){
 					$data .= " $k='$v' ";
@@ -260,9 +268,10 @@ private $db;
 		if(empty($item_code)){
 			$i = 0;
 			while($i == 0){
-				$item_code  = mt_rand(1,999999999999);
-			
-				$item_code = sprintf("%'012d", $item_code);
+				$item_code  = time();
+				// $values = array(4065 => 'Male', 4067 => 'Female');
+				// $topicName = $values[$category];
+				$item_code = sprintf("%d%d",$category,$item_code);
 				$chk = $this->db->query("SELECT * FROM items where item_code ='$item_code' ");
 				if($chk->num_rows <= 0){
 					$i = 1;
@@ -333,8 +342,9 @@ private $db;
 	function save_order(){
 		extract($_POST);
 		$data = " user_id = {$_SESSION['login_id']} ";
-		$data .= ", total_amount = '$total_amount' ";
+    $data .= ", total_amount = '$total_amount' ";
 		$data .= ", amount_tendered = '$total_tendered' ";
+
 		if(empty($id)){
 			$save = $this->db->query("INSERT INTO sales set $data");
 			$id = $this->db->insert_id;
