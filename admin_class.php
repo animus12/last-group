@@ -239,6 +239,7 @@ private $db;
 	}
 	function save_product(){
 		extract($_POST);
+		// return $_POST['category'];
 		
 		$data = "";
 		foreach($_POST as $k => $v){

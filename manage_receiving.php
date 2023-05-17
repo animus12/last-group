@@ -5,8 +5,9 @@ if(isset($_GET['id'])){
 	foreach($qry->fetch_array() as $k => $v){
 		$$k = $v;
 	}
+	$mark = $_GET['id'];
 	// echo "SELECT s.*,i.name as iname,i.item_code as code,i.id as iid FROM stocks s inner join items i on i.id = s.item_id ".(isset($inventory_ids) ? "where s.id in ($inventory_ids)":"");
-	$stock = $conn->query("SELECT s.*,i.name as iname,i.item_code as code,i.id as iid FROM stocks s inner join items i on i.id = s.item_id ".(isset($inventory_ids) ? "where s.id in ($inventory_ids)":"")." ");
+	$stock = $conn->query("SELECT s.*,i.name as iname,i.item_code as code,i.id as iid FROM stocks s inner join items i on i.id = s.item_id  ");
 }
 ?>
 <div class="col-lg-12">
