@@ -1,7 +1,6 @@
  <?php
     include 'db_connect.php';
     $month = isset($_GET['month']) ? $_GET['month'] : date('Y-m');
-		echo $month;
 ?>
 <div class="container-fluid">
     <div class="col-lg-12">

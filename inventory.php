@@ -44,7 +44,7 @@
 						<td><?php echo $row['category'] ?></td>
 						<?php if($available <= 0): ?>
 							<td class="bg-danger text-light text-center">Out of Stock</td>
-						<?php elseif($available <= 20): ?>
+						<?php elseif($available <= 50): ?>
 								<td class="bg-warning text-center"><?php echo $available ?></td>
 						<?php else: ?>
 									<td class="text-center"><?php echo $available ?></td>

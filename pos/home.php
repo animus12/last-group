@@ -75,6 +75,7 @@
 </style>
 <?php
 if(isset($_GET['id'])):
+	
 $sale = $conn->query("SELECT * FROM sales where id = {$_GET['id']}");
 foreach($sale->fetch_array() as $k => $v){
     $$k= $v;
@@ -366,12 +367,11 @@ endif;
    $("#pay").click(function(){
     start_load()
     var amount = $('[name="total_amount"]').val()
-    if($('#p-list tbody tr').length <= 0){
+    if( amount == 0){
         alert_toast("Please add atleast 1 product first.",'danger')
         end_load()
         return false;
     }
-    console.log(amount)
     $('#apayable').val(parseFloat(amount).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:2,maximumFractionDigits:2}))
     $('#pay_modal').modal('show')
     setTimeout(function(){
@@ -407,12 +407,17 @@ endif;
     $('#manage-order').submit(function(e){
         e.preventDefault();
         start_load()
+				if($("#tendered").val() == "" ){
+					alert_toast("Enter Amount",'danger')
+					end_load()
+					return false;
+				}
         $.ajax({
             url:'../ajax.php?action=save_order',
-            method:'POST',
+            method: 'POST',
             data:$(this).serialize(),
             success:function(resp){
-                if(resp > 0){
+              if(resp > 0){
                     if($('[name="total_tendered"]').val() > 0){
                         alert_toast("Data successfully saved.",'success')
                         setTimeout(function(){

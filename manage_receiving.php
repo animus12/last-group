@@ -49,7 +49,7 @@ if(isset($_GET['id'])){
 							<input type="number" min='1' class="form-control form-control-sm text-right" id="qty">
 						</div>
 						<div class="form-group col-sm-3">
-							<label class="control-label">Cost</label>
+							<label class="control-label">Unit Cost</label>
 							<input type="text" class="form-control form-control-sm number text-right" id="cost">
 						</div>
 						<div class="form-group col-sm-2 d-flex">
@@ -63,7 +63,7 @@ if(isset($_GET['id'])){
 									<th class="text-center" width="15%">Item Code</th>
 									<th class="text-center" width="20%">Product</th>
 									<th class="text-center" width="15%">QTY</th>
-									<th class="text-center" width="20%">Cost</th>
+									<th class="text-center" width="20%">Unit Cost</th>
 									<th class="text-center" width="25%">Amount</th>
 								</tr>
 							</thead>
