@@ -23,7 +23,7 @@
 
 ?>
 
-        <large><b><?php echo isset($_SESSION['system']['name']) ? $_SESSION['system']['name'] : '' ?></b></large>
+        <large><b>JCC Clothes Centre.</b></large>
       </div>
 	  	<div class="float-right">
         <div class=" dropdown mr-4">

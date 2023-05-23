@@ -250,13 +250,7 @@ private $db;
 				if($k == 'price'){
 					$v= str_replace(',', '', $v);
 				}
-				if($k == 'category') {
-					if($v == '4065') {
-						$v = 'Male';
-					} else {
-						$v = 'Female';
-					}
-				}
+			
 				if(empty($data)){
 					$data .= " $k='$v' ";
 				}else{
@@ -275,7 +269,7 @@ private $db;
 				$item_code  = time();
 				// $values = array(4065 => 'Male', 4067 => 'Female');
 				// $topicName = $values[$category];
-				$item_code = sprintf("%d%d",$category,$item_code);
+				$item_code = sprintf("%d",$item_code);
 				$chk = $this->db->query("SELECT * FROM items where item_code ='$item_code' ");
 				if($chk->num_rows <= 0){
 					$i = 1;

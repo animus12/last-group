@@ -10,6 +10,15 @@ if(isset($_GET['id'])){
 	$stock = $conn->query("SELECT s.*,i.name as iname,i.item_code as code,i.id as iid FROM stocks s inner join items i on i.id = s.item_id  ");
 }
 ?>
+<?php
+	if($_SESSION['login_type'] != 1) {
+		?>
+			<script>
+				window.location.href = "index.php?page=home"
+			</script>
+		<?php
+	}
+ ?>
 <div class="col-lg-12">
 	<div class="card">
 		<div class="card-body">

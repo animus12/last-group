@@ -54,7 +54,8 @@ if($_SESSION['login_type'] != 1) {
 				 	</td>
 				 	<td>
 				 		<?php echo $type[$row['type']] ?>
-				 	</td>
+					</td>
+					
 				 	<td>
 				 		<center>
 							<div class="btn-group">
@@ -64,8 +65,10 @@ if($_SESSION['login_type'] != 1) {
 							  </button>
 							  <div class="dropdown-menu">
 							    <a class="dropdown-item edit_user" href="javascript:void(0)" data-id = '<?php echo $row['id'] ?>'>Edit</a>
-							    <div class="dropdown-divider"></div>
-							    <a class="dropdown-item delete_user" href="javascript:void(0)" data-id = '<?php echo $row['id'] ?>'>Delete</a>
+									<?php if($row['type'] == 2): ?> 
+											<div class="dropdown-divider"></div>
+											<a class="dropdown-item delete_user" href="javascript:void(0)" data-id = '<?php echo $row['id'] ?>'>Delete</a>
+									<?php endif; ?>
 							  </div>
 							</div>
 						</center>
@@ -82,7 +85,7 @@ if($_SESSION['login_type'] != 1) {
 <script>
 	$('table').dataTable();
 $('#new_user').click(function(){
-	uni_modal('New User','manage_user.php')
+	uni_modal('New Staff','manage_user.php')
 })
 $('.edit_user').click(function(){
 	uni_modal('Edit User','manage_user.php?id='+$(this).attr('data-id'))

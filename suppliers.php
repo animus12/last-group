@@ -110,6 +110,25 @@
 	$('#manage-supplier').submit(function(e){
 		e.preventDefault()
 		start_load()
+		
+		var cat = $('#manage-supplier')
+		let name = cat.find("[name='name']").val()
+		let contact = cat.find("[name='contact']").val()
+		let address = cat.find("[name='address']").val()
+		
+		if(name == "") {
+		end_load()
+		alert_toast("Please Fill All Fields",'danger')
+        return;
+	}	else if(contact == null) {
+		end_load()
+		alert_toast("Please Fill All Fields",'danger')
+        return;
+	} else if(address == "") {
+		end_load()
+		alert_toast("Please Fill All Fields",'danger')
+        return;
+	} else {
 		$.ajax({
 			url:'ajax.php?action=save_supplier',
 			data: new FormData($(this)[0]),
@@ -135,6 +154,9 @@
 				}
 			}
 		})
+	}
+		
+	
 	})
 	$('.edit_supplier').click(function(){
 		start_load()

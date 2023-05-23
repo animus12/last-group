@@ -24,9 +24,6 @@ foreach($user->fetch_array() as $k =>$v){
 		<div class="form-group">
 			<label for="password">Password</label>
 			<input type="password" name="password" id="password" class="form-control" value="" autocomplete="off">
-			<?php if(isset($meta['id'])): ?>
-			<small><i>Leave this blank if you dont want to change the password.</i></small>
-		<?php endif; ?>
 		</div>
 		<?php if(isset($meta['type']) && $meta['type'] == 3): ?>
 			<input type="hidden" name="type" value="3">
@@ -36,7 +33,6 @@ foreach($user->fetch_array() as $k =>$v){
 			<label for="type">User Type</label>
 			<select name="type" id="type" class="custom-select">
 				<option value="2" <?php echo isset($meta['type']) && $meta['type'] == 2 ? 'selected': '' ?>>Staff</option>
-				<option value="1" <?php echo isset($meta['type']) && $meta['type'] == 1 ? 'selected': '' ?>>Admin</option>
 			</select>
 		</div>
 		<?php endif; ?>
@@ -50,6 +46,25 @@ foreach($user->fetch_array() as $k =>$v){
 	$('#manage-user').submit(function(e){
 		e.preventDefault();
 		start_load()
+		
+		var cat = $('#manage-user')
+		let name =cat.find("[name='name']").val()
+		let username =cat.find("[name='username']").val()
+		let password =cat.find("[name='password']").val()
+		
+	if(name == "") {
+	end_load()
+	alert_toast("Please Fill All Fields",'danger')
+			return;
+	}	else if(username == "") {
+		end_load()
+		alert_toast("Please Fill All Fields",'danger')
+        return;
+	} else if(password == "") {
+		end_load()
+		alert_toast("Please Fill All Fields",'danger')
+        return;
+	} else {
 		$.ajax({
 			url:'ajax.php?action=save_user',
 			method:'POST',
@@ -66,6 +81,8 @@ foreach($user->fetch_array() as $k =>$v){
 				}
 			}
 		})
+	 }
+		
 	})
 
 </script>

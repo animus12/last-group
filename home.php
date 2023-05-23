@@ -82,7 +82,7 @@
 				</div>
 				<div class="col-lg-4 p-2">
 				<div class=" d-flex flex-column align-items-center justify-content-center h-100 p-3 bg-light" style="border-radius: 20px;">
-							<h2>Total of tocks</h2>
+							<h2>Total of stocks</h2>
 							<?php
 							$haha = 0;
 							$i = 1;

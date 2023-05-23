@@ -16,7 +16,7 @@
 			<div class="col-md-12">
 				<div class="card">
 					<div class="card-header">
-						<b>Receiving List</b>
+						<b>Receiving Inventory List</b>
 						 <span class="float:right"><a class="btn btn-primary btn-sm col-sm-3 float-right" href="index.php?page=manage_receiving" id="">
 		                    <i class="fa fa-plus"></i> New Entry
 		                </a></span>

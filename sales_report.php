@@ -2,12 +2,21 @@
     include 'db_connect.php';
     $month = isset($_GET['month']) ? $_GET['month'] : date('Y-m');
 ?>
+<?php
+	if($_SESSION['login_type'] != 1) {
+		?>
+			<script>
+				window.location.href = "index.php?page=home"
+			</script>
+		<?php
+	}
+ ?>
 <div class="container-fluid">
     <div class="col-lg-12">
         <div class="card">
             <div class="card_body">
             <div class="row justify-content-center pt-4">
-                <label for="" class="mt-2">Month</label>
+                <label for="" class="mt-2">Sales Report for the month of :</label>
                 <div class="col-sm-3">
                     <input type="month" name="month" id="month" value="<?php echo $month ?>" class="form-control">
                 </div>

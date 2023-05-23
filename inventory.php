@@ -1,5 +1,8 @@
 <?php include "db_connect.php" ?>
-
+<?php
+    include 'db_connect.php';
+    $month = isset($_GET['month']) ? $_GET['month'] : date('Y-m');
+?>
 <?php
 	if($_SESSION['login_type'] != 1) {
 		?>
@@ -54,15 +57,57 @@
 					<?php endwhile; ?>
 				</tbody>
 			</table>
+			<hr>
+                <div class="col-md-12 mb-4">
+                    <center>
+                        <button class="btn btn-success btn-sm col-sm-3" type="button" id="print"><i class="fa fa-print"></i> Print</button>
+                    </center>
+                </div>
 		</div>
 	</div>
 </div>
-
+<noscript>
+	<style>
+		table#myTable{
+			width:100%;
+			border-collapse:collapse
+		}
+		table#myTable td,table#myTable th{
+			border:1px solid
+		}
+		p {
+				margin:unset;
+		}
+		.text-center{
+			text-align:center
+		}
+		.text-right{
+				text-align:right
+		}
+	</style>
+</noscript>
 <script>
 	$(document).ready(function() {
-		var table = $('#myTable').DataTable( {
-        lengthChange: true,
-        buttons: [ 'copy', 'excel', 'pdf', 'colvis' ]
-    } );
+		// var table = $('#myTable').DataTable( {
+    //     lengthChange: true,
+    //     buttons: [ 'copy', 'excel', 'pdf', 'colvis' ]
+    // } );
+	})
+	
+	$('#myTable').dataTable()
+	$('#print').click(function(){
+            $('#myTable').dataTable().fnDestroy()
+		var _c = $('#myTable').clone();
+		var ns = $('noscript').clone();
+            ns.append(_c)
+		var nw = window.open('','_blank','width=900,height=600')
+		nw.document.write('<p class="text-center"><b>Inventory Report as of <?php echo date("F, Y",strtotime($month)) ?></b></p>')
+		nw.document.write(ns.html())
+		nw.document.close()
+		nw.print()
+		setTimeout(() => {
+			nw.close()
+            $('#myTable').dataTable()
+		}, 500);
 	})
 </script>

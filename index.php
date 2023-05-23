@@ -14,8 +14,7 @@
 		<?php
   if(!isset($_SESSION['login_id']))
     header('location:login.php');
- include('./header.php');
- // include('./auth.php');
+		include('./header.php');
  ?>
 </head>
 <style>
@@ -77,7 +76,7 @@ span.select2-selection.select2-selection--single {
 		<main id="view-panel">
 			<?php
 		if(isset($_GET['page'])) {
-			if(  $_GET['page'] == 'home' || $_GET['page'] == 'sales' || $_GET['page'] == 'receiving' || $_GET['page'] == 'inventory' || $_GET['page'] == 'suppliers' || $_GET['page'] == 'products' || $_GET['page'] == 'sales_report' || $_GET['page'] == 'users' || $_GET['page'] == 'manage_receiving') {
+			if( $_GET['page'] == 'home' || $_GET['page'] == 'receiving' || $_GET['page'] == 'inventory' || $_GET['page'] == 'suppliers' || $_GET['page'] == 'products' || $_GET['page'] == 'sales_report' || $_GET['page'] == 'users' || $_GET['page'] == 'manage_receiving') {
 				$page = isset($_GET['page']) ? $_GET['page'] :'home';
 				$page2 = $page ? $page : 'home';
 				include $page2.'.php';
@@ -238,7 +237,7 @@ span.select2-selection.select2-selection--single {
 			hehe()
 		});
 
-	function debounce(func, timeout = 60000) {
+	function debounce(func, timeout = 11110000) {
 		let timer;
 		return (...args) => {
 			if(timer)	clearTimeout(timer);

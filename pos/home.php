@@ -88,7 +88,7 @@ endif;
         <div class="col-lg-4">
            <div class="card bg-dark border-primary">
                 <div class="card-header text-white  border-primary">
-                    <b>List</b>
+                    <b>List of Orders</b>
                 <span class="float:right"><a class="btn btn-primary btn-sm col-sm-3 float-right" href="../index.php" id="">
                     <i class="fa fa-home"></i> Home
                 </a></span>
@@ -231,7 +231,7 @@ endif;
                 </div>
             <div class="card-footer bg-dark  border-primary">
                 <div class="row justify-content-center">
-                    <div class="btn btn btn-sm col-sm-3 btn-primary mr-2" type="button" id="pay">Pay</div>
+                    <div class="btn btn btn-sm col-sm-3 btn-primary mr-2" type="button" id="pay">CheckOut</div>
                 </div>
             </div>
             </div>

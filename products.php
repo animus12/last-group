@@ -34,8 +34,8 @@
 								<label class="control-label">Category</label>
 								<select name="category" id="category" class="custom-select custom-select-sm">
 									<option value="" disabled selected>--Select Category--</option>
-									<option value="4065">Male</option>
-									<option value="4067">Female</option>
+									<option>Male</option>
+									<option>Female</option>
 								</select>
 							</div>
 							<div class="form-group">
@@ -101,7 +101,7 @@
 									</td>
 									<td class="">
 										<p>Name: <b><?php echo $row['name'] ?></b></p>
-										<p>Category: <b><?php echo $row['category'] != null ? $row['category'] : 'Null' ?></b></p>
+										<p>Category: <b><?php echo $row['category']?></b></p>
 										<p><small>Price: <b><?php echo number_format($row['price'],2) ?></b></small></p>
 										<p><small>Size: <b><?php echo $row['size'] ?></b></small></p>
 										<p><small>Description: <b><?php echo $row['description'] ?></b></small></p>
@@ -146,6 +146,37 @@
 	$('#manage-product').submit(function(e){
 		e.preventDefault()
 		start_load()
+		
+		var cat = $('#manage-product')
+		let name =cat.find("[name='name']").val()
+		let category =cat.find("[name='category']").val()
+		let description =cat.find("[name='description']").val()
+		let price =cat.find("[name='price']").val()
+		let size =cat.find("[name='size']").val()
+	
+
+	if(name == "") {
+		end_load()
+		alert_toast("Please Fill All Fields",'danger')
+        return;
+	}	else if(category == null) {
+		end_load()
+		alert_toast("Please Fill All Fields",'danger')
+        return;
+	} else if(description == "") {
+		end_load()
+		alert_toast("Please Fill All Fields",'danger')
+        return;
+	} else if(size == null) {
+		end_load()
+		alert_toast("Please Fill All Fields",'danger')
+        return;
+	} else if(price == "") {
+		end_load()
+		alert_toast("Please Fill All Fields",'danger')
+        return;
+	} else {
+		
 		$.ajax({
 			url:'ajax.php?action=save_product',
 			data: new FormData($(this)[0]),
@@ -155,7 +186,6 @@
 		    method: 'POST',
 		    type: 'POST',
 			success:function(resp){
-				
 				console.log(resp)
 				if(resp==1){
 					alert_toast("Data successfully added",'success')
@@ -173,6 +203,8 @@
 				}
 			}
 		})
+	}
+		
 	})
 	
 	$('.edit_product').click(function(){
@@ -185,7 +217,7 @@
 		cat.find("[name='id']").val(data.id)
 		cat.find("[name='item_code']").val(data.item_code)
 		cat.find("[name='name']").val(data.name)
-		cat.find("[name='category']").val(data.category == "Male"? 4065: 4067)
+		cat.find("[name='category']").val(data.category)
 		cat.find("[name='description']").val(data.description)
 		cat.find("[name='price']").val(data.price)
 		cat.find("[name='size']").val(data.size)

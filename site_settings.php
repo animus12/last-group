@@ -58,7 +58,6 @@ if($qry->num_rows > 0){
 }
  ?>
 <div class="container-fluid">
-	
 	<div class="card col-lg-12">
 		<div class="card-body">
 			<form action="" id="manage-settings">
