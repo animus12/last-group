@@ -52,6 +52,7 @@
 								$sales = $conn->query("SELECT * FROM sales s where s.amount_tendered > 0 and date_format(s.date_created,'%Y-%m') = '{$date}' order by unix_timestamp(s.date_created) asc ");
 								if($sales->num_rows > 0) {
 								while($row = $sales->fetch_array()) {
+									echo $row['inventory_ids'];
 									$items = $conn->query("SELECT s.*,i.name,i.item_code as code,i.size  FROM stocks s inner join items i on i.id=s.item_id where s.id in ({$row['inventory_ids']})");
 								 while($roww = $items->fetch_array()) {
 									 $total += $roww['price']*$roww['qty'];

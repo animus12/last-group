@@ -211,7 +211,7 @@ endif;
 											echo '';
 										} else { ?>
 
-											<tr data-id="<?php echo $row['id'] ?>" class="p-item" data-json='<?php echo json_encode($row) ?>'>
+											<tr data-id="<?php echo $row['id'] ?>" class="p-item" data-stocks="<?php echo $available; ?>" data-json='<?php echo json_encode($row) ?>'>
 												<td class="text-center"><?php echo $i++; ?></td>
 												<td><b><?php echo $row['item_code'] ?></b></td>
 												<td><b><?php echo ucwords($row['name']) ?></b></td>
@@ -231,7 +231,7 @@ endif;
                 </div>
             <div class="card-footer bg-dark  border-primary">
                 <div class="row justify-content-center">
-                    <div class="btn btn btn-sm col-sm-3 btn-primary mr-2" type="button" id="pay">CheckOut</div>
+                    <button  class="btn btn btn-sm col-sm-3 btn-primary mr-2" type="button" id="pay">CheckOut</button>
                 </div>
             </div>
             </div>
@@ -271,10 +271,17 @@ endif;
     </div>
   </div>
 <script>
+	
+	
+										
     var total;
+    var excessStocks = false;
+    var ace = 'sdsd';
+		console.log(excessStocks)
     cat_func();
    $('#p-list .p-item').click(function(){
         var data = $(this).attr('data-json')
+        var datas = $(this).attr('data-stocks')
             data = JSON.parse(data)
         if($('#o-list tr[data-id="'+data.id+'"]').length > 0){
             var tr = $('#o-list tr[data-id="'+data.id+'"]')
@@ -286,7 +293,7 @@ endif;
         }
         var tr = $('<tr class="o-item"></tr>')
         tr.attr('data-id',data.id)
-        tr.append('<td><div class="d-flex"><span class="btn btn-sm btn-secondary btn-minus"><b><i class="fa fa-minus"></i></b></span><input type="number" name="qty[]" id="" value="1"><span class="btn btn-sm btn-secondary btn-plus"><b><i class="fa fa-plus"></i></b></span></div></td>')
+        tr.append('<td><div class="d-flex"><span class="btn btn-sm btn-secondary btn-minus"><b><i class="fa fa-minus"></i></b></span><input type="number" data-stockss="'+ datas +'"  name="qty[]" id="" value="1"><span class="btn btn-sm btn-secondary btn-plus data-stocksss="'+datas+'""><b><i class="fa fa-plus"></i></b></span></div></td>')
         tr.append('<td><input type="hidden" name="inv_id[]" id="" value=""><input type="hidden" name="item_id[]" id="" value="'+data.id+'">'+data.name+' <small class="psmall">('+(parseFloat(data.price).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:2,maximumFractionDigits:2}))+')</small></td>')
         tr.append('<td class="text-right"><input type="hidden" name="price[]" id="" value="'+data.price+'"><input type="hidden" name="amount[]" id="" value="'+data.price+'"><span class="amount">'+(parseFloat(data.price).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:2,maximumFractionDigits:2}))+'</span></td>')
         tr.append('<td><span class="btn btn-sm btn-danger btn-rem"><b><i class="fa fa-times text-white"></i></b></span></td>')
@@ -294,22 +301,71 @@ endif;
         qty_func()
         calc()
         cat_func();
+			
    })
     function qty_func(){
+					$('#o-list [name="qty[]').each(function(){
+						$(this).on('blur',function() {
+							if($(this).val() == ""){
+								$(this).val(1)
+							}
+						})
+						$(this).on('input',function(e){
+							var invalidChars = [
+								"-",
+								"+",
+								"e",
+								"."
+						];
+						if (invalidChars.includes(e.key)) {
+							e.preventDefault();
+						}
+						let mark = $(this).val()						
+						if(parseInt($(this).val()) > $(this).data("stockss")) {
+							alert_toast("sobra na ui",'danger')
+							$(this).val($(this).data("stockss"))
+							end_load()
+							return false;
+						}else {
+						
+						}
+						$(this).val(mark).trigger('change')
+						calc()
+            })
+					})
+			
          $('#o-list .btn-minus').each(function(){
             $(this).click(function(e){
                 e.preventDefault()
                 var qty = $(this).siblings('input').val()
-                    qty = qty > 1 ? parseInt(qty) - 1 : 1;
+								var stock = $(this).siblings('input').data("stockss")
+										qty = qty > 1 ? parseInt(qty) - 1 : 1;
+										if(qty > stock) {
+											alert_toast("Sobra padin bawasan mopa nadin",'danger')
+										
+											end_load()
+											return false;
+										}else{
+											
+										}
                     $(this).siblings('input').val(qty).trigger('change')
                     calc()
             })
          })
          $('#o-list .btn-plus').each(function(e){
             $(this).click(function(e){
-                e.preventDefault()
+							e.preventDefault()
                 var qty = $(this).siblings('input').val()
+                var stock = $(this).siblings('input').data("stockss")
                     qty = parseInt(qty) + 1;
+										if(qty > stock) {
+											alert_toast("Sobra nadin",'danger')
+											// $("#pay").prop("disabled", true)
+											end_load()
+											return false;
+										}else {
+											$("#pay").prop("disabled", false)
+										}
                     $(this).siblings('input').val(qty).trigger('change')
                     calc()
             })
@@ -329,7 +385,7 @@ endif;
                 var tr = $(this).closest('tr');
                 var qty = $(this).val();
                 var price = tr.find('[name="price[]"]').val()
-                var amount = parseFloat(qty) * parseFloat(price);
+                var amount = (parseFloat(qty)  || 1)* parseFloat(price);
                     tr.find('[name="amount[]"]').val(amount)
                     tr.find('.amount').text(parseFloat(amount).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:2,maximumFractionDigits:2}))
 
@@ -396,7 +452,13 @@ endif;
         tend = tend > 0 ? tend : 0;
         var amount=$('[name="total_amount"]').val()
         var change = parseFloat(tend) - parseFloat(amount)
-        $('#change').val(parseFloat(change).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:2,maximumFractionDigits:2}))
+				if(change < 0) {
+					alert_toast("Enter the right amount",'danger')
+        // end_load()
+        // return false;
+				}else {
+				}
+				$('#change').val(parseFloat(change).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:2,maximumFractionDigits:2}))
    })
 
     $('#tendered').on('input',function(){
@@ -412,11 +474,17 @@ endif;
 					end_load()
 					return false;
 				}
+				if($('#change').val() < 0 ){
+					alert_toast("walang uutang tang ina ka",'danger')
+					end_load()
+					return false;
+				}
         $.ajax({
             url:'../ajax.php?action=save_order',
             method: 'POST',
             data:$(this).serialize(),
             success:function(resp){
+							console.log(resp)
               if(resp > 0){
                     if($('[name="total_tendered"]').val() > 0){
                         alert_toast("Data successfully saved.",'success')

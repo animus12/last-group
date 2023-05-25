@@ -14,6 +14,7 @@
 	<div class="sidebar-list">
 		<a href="index.php?page=home" class="nav-item nav-home"><span class='icon-field'><i class="fa fa-tachometer-alt "></i></span> Dashboard</a>
 		<a href="pos/index.php" class="nav-item nav-pos"><span class='icon-field'><i class="fa fa-file-invoice "></i></span> POS</a>
+		<a href="index.php?page=sales" class="nav-item nav-sales"><span class='icon-field'><i class="fa fa-list-alt "></i></span> Sales</a>
 		<?php if($_SESSION['login_type'] == 1): ?>
 		<div class="mx-2 text-white">Inventory</div>
 		<a href="index.php?page=receiving" class="nav-item nav-receiving"><span class='icon-field'><i class="fa fa-list-alt "></i></span> Receiving</a>

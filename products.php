@@ -186,7 +186,6 @@
 		    method: 'POST',
 		    type: 'POST',
 			success:function(resp){
-				console.log(resp)
 				if(resp==1){
 					alert_toast("Data successfully added",'success')
 					setTimeout(function(){

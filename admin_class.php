@@ -342,6 +342,7 @@ private $db;
 		$data = " user_id = {$_SESSION['login_id']} ";
     $data .= ", total_amount = '$total_amount' ";
 		$data .= ", amount_tendered = '$total_tendered' ";
+		$data .= ", inventory_ids = '' ";
 
 		if(empty($id)){
 			$save = $this->db->query("INSERT INTO sales set $data");
@@ -355,7 +356,7 @@ private $db;
 			$ids = implode(",",$inv_id);
 			if(!empty($ids) > 0){
 			$qry = $this->db->query("SELECT * FROM sales where id= '$id' ")->fetch_array();
-			$this->db->query("DELETE FROM stocks where id not in ($ids) and id in ({$qry['inventory_ids']})");
+			// $this->db->query("DELETE FROM stocks where id not in ($ids) and id in ({$qry['inventory_ids']})");
 			}
 			foreach($inv_id as $k=>$v){
 				$data  = " 	item_id = {$item_id[$k]}";

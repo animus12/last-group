@@ -7,7 +7,7 @@ if(isset($_GET['id'])){
 	}
 	$mark = $_GET['id'];
 	// echo "SELECT s.*,i.name as iname,i.item_code as code,i.id as iid FROM stocks s inner join items i on i.id = s.item_id ".(isset($inventory_ids) ? "where s.id in ($inventory_ids)":"");
-	$stock = $conn->query("SELECT s.*,i.name as iname,i.item_code as code,i.id as iid FROM stocks s inner join items i on i.id = s.item_id  ");
+	$stock = $conn->query("SELECT s.*,i.name as iname,i.item_code as code,i.id as iid FROM stocks s inner join items i on i.id = s.item_id ".(isset($inventory_ids) ? "where s.id in ($inventory_ids)":"")." ");
 }
 ?>
 <?php
@@ -47,7 +47,7 @@ if(isset($_GET['id'])){
 								<option></option>
 								<?php
 								$items = $conn->query("SELECT * FROM items order by name asc");
-								while($row = $items->fetch_assoc()):
+								while($row = $items->fetch_array()):
 								?>
 								<option value="<?php echo $row['id'] ?>" data-code = "<?php echo $row['item_code'] ?>"><?php echo ucwords($row['name']) ?></option>
 							<?php endwhile; ?>
@@ -79,7 +79,7 @@ if(isset($_GET['id'])){
 							<tbody>
 								<?php
 									if(isset($stock)):
-									while($row = $stock->fetch_assoc()):
+									while($row = $stock->fetch_array()):
 								?>
 								<tr data-id="<?php echo $row['iid'] ?>">
 									<td class="text-center">
@@ -240,6 +240,7 @@ if(isset($_GET['id'])){
  			method:'POST',
  			data:$(this).serialize(),
  			success:function(resp){
+				console.log(resp)
  				if(resp == 1){
  					alert_toast("Data successfully saved.","success")
  					setTimeout(function(){
